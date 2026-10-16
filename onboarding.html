@@ -1,0 +1,6591 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+<meta name="author" content="Janani Ravi" />
+
+<meta name="date" content="2026-10-16" />
+
+<title>Bridge2AI onboarding analysis</title>
+
+<script src="site_libs/header-attrs-2.31/header-attrs.js"></script>
+<script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/cosmo.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<style>h1 {font-size: 34px;}
+       h1.title {font-size: 38px;}
+       h2 {font-size: 30px;}
+       h3 {font-size: 24px;}
+       h4 {font-size: 18px;}
+       h5 {font-size: 16px;}
+       h6 {font-size: 12px;}
+       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
+       pre:not([class]) { background-color: white }</style>
+<script src="site_libs/jqueryui-1.13.2/jquery-ui.min.js"></script>
+<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/highlightjs-9.12.0/textmate.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+<script src="site_libs/kePrint-0.0.1/kePrint.js"></script>
+<link href="site_libs/lightable-0.0.1/lightable.css" rel="stylesheet" />
+
+<link rel="icon" href="https://github.com/workflowr/workflowr-assets/raw/main/img/reproducible.png">
+<!-- Add a small amount of space between sections. -->
+<style type="text/css">
+div.section {
+  padding-top: 12px;
+}
+</style>
+
+
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
+<style type="text/css">code{white-space: pre;}</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+
+
+
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+details > summary > p:only-child {
+  display: inline;
+}
+pre code {
+  padding: 0;
+}
+</style>
+
+
+<style type="text/css">
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #adb5bd;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script type="text/javascript">
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark the anchor link active (and if it's in a dropdown, also mark that active)
+  var dropdown = menuAnchor.closest('li.dropdown');
+  if (window.bootstrap) { // Bootstrap 4+
+    menuAnchor.addClass('active');
+    dropdown.find('> .dropdown-toggle').addClass('active');
+  } else { // Bootstrap 3
+    menuAnchor.parent().addClass('active');
+    dropdown.addClass('active');
+  }
+
+  // Navbar adjustments
+  var navHeight = $(".navbar").first().height() + 15;
+  var style = document.createElement('style');
+  var pt = "padding-top: " + navHeight + "px; ";
+  var mt = "margin-top: -" + navHeight + "px; ";
+  var css = "";
+  // offset scroll position for anchor links (for fixed navbar)
+  for (var i = 1; i <= 6; i++) {
+    css += ".section h" + i + "{ " + pt + mt + "}\n";
+  }
+  style.innerHTML = "body {" + pt + "padding-bottom: 40px; }\n" + css;
+  document.head.appendChild(style);
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before, .tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "\e259";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "\e258";
+  font-family: 'Glyphicons Halflings';
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+
+
+
+<style type="text/css">
+
+#TOC {
+  margin: 25px 0px 20px 0px;
+}
+@media (max-width: 768px) {
+#TOC {
+  position: relative;
+  width: 100%;
+}
+}
+
+@media print {
+.toc-content {
+  /* see https://github.com/w3c/csswg-drafts/issues/4434 */
+  float: right;
+}
+}
+
+.toc-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+div.main-container {
+  max-width: 1200px;
+}
+
+div.tocify {
+  width: 20%;
+  max-width: 260px;
+  max-height: 85%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  div.tocify {
+    width: 25%;
+  }
+}
+
+@media (max-width: 767px) {
+  div.tocify {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.tocify ul, .tocify li {
+  line-height: 20px;
+}
+
+.tocify-subheader .tocify-item {
+  font-size: 0.90em;
+}
+
+.tocify .list-group-item {
+  border-radius: 0px;
+}
+
+
+</style>
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row">
+<div class="col-xs-12 col-sm-4 col-md-3">
+<div id="TOC" class="tocify">
+</div>
+</div>
+
+<div class="toc-content col-xs-12 col-sm-8 col-md-9">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-bs-toggle="collapse" data-target="#navbar" data-bs-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">B2AI teaming</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="index.html">Home</a>
+</li>
+<li>
+  <a href="onboarding.html">Onboarding</a>
+</li>
+<li>
+  <a href="survey_analyses.html">Survey analyses</a>
+</li>
+<li>
+  <a href="impact_dashboard.html">Impact dashboard</a>
+</li>
+<li>
+  <a href="questions.html">Questions</a>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div id="header">
+
+
+
+<h1 class="title toc-ignore">Bridge2AI onboarding analysis</h1>
+<h4 class="author">Janani Ravi</h4>
+<h4 class="date">2026-10-16</h4>
+
+</div>
+
+
+<p>
+<button type="button" class="btn btn-default btn-workflowr btn-workflowr-report" data-toggle="collapse" data-target="#workflowr-report">
+<span class="glyphicon glyphicon-list" aria-hidden="true"></span> workflowr <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span>
+</button>
+</p>
+<div id="workflowr-report" class="collapse">
+<ul class="nav nav-tabs">
+<li class="active">
+<a data-toggle="tab" href="#summary">Summary</a>
+</li>
+<li>
+<a data-toggle="tab" href="#checks"> Checks <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> </a>
+</li>
+<li>
+<a data-toggle="tab" href="#versions">Past versions</a>
+</li>
+</ul>
+<div class="tab-content">
+<div id="summary" class="tab-pane fade in active">
+<p>
+<strong>Last updated:</strong> 2026-10-16
+</p>
+<p>
+<strong>Checks:</strong> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 7 <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> 0
+</p>
+<p>
+<strong>Knit directory:</strong> <code>b2ai_survey/</code> <span class="glyphicon glyphicon-question-sign" aria-hidden="true" title="This is the local directory in which the code in this file was executed."> </span>
+</p>
+<p>
+This reproducible <a href="https://rmarkdown.rstudio.com">R Markdown</a> analysis was created with <a
+  href="https://github.com/workflowr/workflowr">workflowr</a> (version 1.7.2). The <em>Checks</em> tab describes the reproducibility checks that were applied when the results were created. The <em>Past versions</em> tab lists the development history.
+</p>
+<hr>
+</div>
+<div id="checks" class="tab-pane fade">
+<div id="workflowr-checks" class="panel-group">
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRMarkdownfilestronguptodate"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>R Markdown file:</strong> up-to-date </a>
+</p>
+</div>
+<div id="strongRMarkdownfilestronguptodate" class="panel-collapse collapse">
+<div class="panel-body">
+<p>Great! Since the R Markdown file has been committed to the Git repository, you know the exact version of the code that produced these results.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongEnvironmentstrongempty"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Environment:</strong> empty </a>
+</p>
+</div>
+<div id="strongEnvironmentstrongempty" class="panel-collapse collapse">
+<div class="panel-body">
+<p>Great job! The global environment was empty. Objects defined in the global environment can affect the analysis in your R Markdown file in unknown ways. For reproduciblity it’s best to always run the code in an empty environment.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongSeedstrongcodesetseed20201118code"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Seed:</strong> <code>set.seed(20201118)</code> </a>
+</p>
+</div>
+<div id="strongSeedstrongcodesetseed20201118code" class="panel-collapse collapse">
+<div class="panel-body">
+<p>The command <code>set.seed(20201118)</code> was run prior to running the code in the R Markdown file. Setting a seed ensures that any results that rely on randomness, e.g. subsampling or permutations, are reproducible.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongSessioninformationstrongrecorded"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Session information:</strong> recorded </a>
+</p>
+</div>
+<div id="strongSessioninformationstrongrecorded" class="panel-collapse collapse">
+<div class="panel-body">
+<p>Great job! Recording the operating system, R version, and package versions is critical for reproducibility.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongCachestrongnone"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Cache:</strong> none </a>
+</p>
+</div>
+<div id="strongCachestrongnone" class="panel-collapse collapse">
+<div class="panel-body">
+<p>Nice! There were no cached chunks for this analysis, so you can be confident that you successfully produced the results during this run.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongFilepathsstrongrelative"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>File paths:</strong> relative </a>
+</p>
+</div>
+<div id="strongFilepathsstrongrelative" class="panel-collapse collapse">
+<div class="panel-body">
+<p>Great job! Using relative paths to the files within your workflowr project makes it easier to run your code on other machines.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomjananiravib2aisurveytreece2a082cd8e723ffd9525ec15748c99fc688aaa0targetblankce2a082a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/jananiravi/b2ai_survey/tree/ce2a082cd8e723ffd9525ec15748c99fc688aaa0" target="_blank">ce2a082</a> </a>
+</p>
+</div>
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomjananiravib2aisurveytreece2a082cd8e723ffd9525ec15748c99fc688aaa0targetblankce2a082a" class="panel-collapse collapse">
+<div class="panel-body">
+<p>
+Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility.
+</p>
+<p>
+The results in this page were generated with repository version <a href="https://github.com/jananiravi/b2ai_survey/tree/ce2a082cd8e723ffd9525ec15748c99fc688aaa0" target="_blank">ce2a082</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
+</p>
+<p>
+Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
+</p>
+<pre><code>
+Ignored files:
+    Ignored:    data/raw/
+
+</code></pre>
+<p>
+Note that any generated files, e.g. HTML, png, CSS, etc., are not included in this status report because it is ok for generated content to have uncommitted changes.
+</p>
+</div>
+</div>
+</div>
+</div>
+<hr>
+</div>
+<div id="versions" class="tab-pane fade">
+
+<p>
+These are the previous versions of the repository in which changes were made to the R Markdown (<code>analysis/onboarding.rmd</code>) and HTML (<code>docs/onboarding.html</code>) files. If you’ve configured a remote Git repository (see <code>?wflow_git_remote</code>), click on the hyperlinks in the table below to view the files as they were in that past version.
+</p>
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+File
+</th>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+<th>
+Message
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/jananiravi/b2ai_survey/ce2a082cd8e723ffd9525ec15748c99fc688aaa0/docs/onboarding.html" target="_blank">ce2a082</a>
+</td>
+<td>
+Emily Boyer
+</td>
+<td>
+2026-10-16
+</td>
+<td>
+Merge branch ‘onboarding-anonymized-2026-09’ into impact-dashboard
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/jananiravi/b2ai_survey/5604aa52b14ac44179d3156683a92185d7851398/docs/onboarding.html" target="_blank">5604aa5</a>
+</td>
+<td>
+Emily Boyer
+</td>
+<td>
+2026-10-16
+</td>
+<td>
+Build site.
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/jananiravi/b2ai_survey/dec7feb4b3cfe92aa6e702b8a4f5c2c479f8333d/docs/onboarding.html" target="_blank">dec7feb</a>
+</td>
+<td>
+Emily Boyer
+</td>
+<td>
+2026-10-09
+</td>
+<td>
+Merge branch ‘onboarding-anonymized-2026-09’ into impact-dashboard
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/jananiravi/b2ai_survey/ba0f63254bfa1f27d13542abd4699de78e36308d/docs/onboarding.html" target="_blank">ba0f632</a>
+</td>
+<td>
+Emily Boyer
+</td>
+<td>
+2026-10-09
+</td>
+<td>
+Build site.
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/jananiravi/b2ai_survey/1526c4ec579cf87106d4e78351e85101c5f8a4e3/docs/onboarding.html" target="_blank">1526c4e</a>
+</td>
+<td>
+Emily Boyer
+</td>
+<td>
+2026-10-07
+</td>
+<td>
+Build site.
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/jananiravi/b2ai_survey/7099f8bd606242f57a1fe7df23e36b9b11a5397f/docs/onboarding.html" target="_blank">7099f8b</a>
+</td>
+<td>
+Emily Boyer
+</td>
+<td>
+2026-10-02
+</td>
+<td>
+Build site.
+</td>
+</tr>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/jananiravi/b2ai_survey/blob/393dae6538b736ac755300cea3bb8215c35e6813/analysis/onboarding.rmd" target="_blank">393dae6</a>
+</td>
+<td>
+Emily Boyer
+</td>
+<td>
+2026-10-02
+</td>
+<td>
+Read the anonymized combined onboarding data on the onboarding page
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/jananiravi/b2ai_survey/9cd26c54605bd7170c4c9d1a0872cf6ed4ed3eeb/docs/onboarding.html" target="_blank">9cd26c5</a>
+</td>
+<td>
+Emily Boyer
+</td>
+<td>
+2026-10-01
+</td>
+<td>
+Add impact dashboard link to the navbar of existing pages
+</td>
+</tr>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/jananiravi/b2ai_survey/blob/66ad9df1d6cc75a1c63a9314a1937ff5f5ddb808/analysis/onboarding.rmd" target="_blank">66ad9df</a>
+</td>
+<td>
+Emily Boyer
+</td>
+<td>
+2026-10-01
+</td>
+<td>
+Restore pre-existing pages to their original state
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/jananiravi/b2ai_survey/66ad9df1d6cc75a1c63a9314a1937ff5f5ddb808/docs/onboarding.html" target="_blank">66ad9df</a>
+</td>
+<td>
+Emily Boyer
+</td>
+<td>
+2026-10-01
+</td>
+<td>
+Restore pre-existing pages to their original state
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/jananiravi/b2ai_survey/9198f775c015462ccabf716b818d3e86c13ab418/docs/onboarding.html" target="_blank">9198f77</a>
+</td>
+<td>
+Emily Boyer
+</td>
+<td>
+2026-10-01
+</td>
+<td>
+Build site.
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/jananiravi/b2ai_survey/4ae8e85da5f44a2b2614cc0065fcabd5ea60c6ba/docs/onboarding.html" target="_blank">4ae8e85</a>
+</td>
+<td>
+Emily Boyer
+</td>
+<td>
+2026-10-01
+</td>
+<td>
+Rebuild site pages with impact dashboard link and hidden setup sections
+</td>
+</tr>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/jananiravi/b2ai_survey/blob/287b1acdf98349315a7447b5c1327fa33105ba81/analysis/onboarding.rmd" target="_blank">287b1ac</a>
+</td>
+<td>
+Emily Boyer
+</td>
+<td>
+2026-10-01
+</td>
+<td>
+Hide setup and data preparation sections on onboarding and survey pages
+</td>
+</tr>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/jananiravi/b2ai_survey/blob/609d00d6dbd06b7eab477f82f44a509b8263a37b/analysis/onboarding.rmd" target="_blank">609d00d</a>
+</td>
+<td>
+Janani Ravi
+</td>
+<td>
+2025-11-20
+</td>
+<td>
+Update analysis docs and site, improve onboarding
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/jananiravi/b2ai_survey/609d00d6dbd06b7eab477f82f44a509b8263a37b/docs/onboarding.html" target="_blank">609d00d</a>
+</td>
+<td>
+Janani Ravi
+</td>
+<td>
+2025-11-20
+</td>
+<td>
+Update analysis docs and site, improve onboarding
+</td>
+</tr>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/jananiravi/b2ai_survey/blob/81a7e330fdcfe367f684c3eb5896e79e2287ba91/analysis/onboarding.rmd" target="_blank">81a7e33</a>
+</td>
+<td>
+Janani Ravi
+</td>
+<td>
+2025-11-05
+</td>
+<td>
+add onboarding analysis, workflowr
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<hr>
+</div>
+</div>
+</div>
+<div id="overview" class="section level2">
+<h2>Overview</h2>
+<p>This document provides a comprehensive analysis of Bridge2AI (B2AI) consortium onboarding data, examining team composition, temporal evolution, institutional diversity, and participation patterns across data generation projects (DGPs) and cores. The analysis focuses on understanding the structure and dynamics of this large-scale team science initiative.</p>
+<p><strong>Data generation projects:</strong></p>
+<ul>
+<li>Voice: Precision public health (B2AI Voice)</li>
+<li>AI-READi: Salutogenesis<br />
+</li>
+<li>CHoRUS: AI/ML for clinical care</li>
+<li>CM4AI: Functional genomics</li>
+</ul>
+</div>
+<div id="setup-and-data-loading" class="section level2">
+<h2>Setup and data loading</h2>
+<pre><code>Dataset dimensions: 511 people × 30 columns</code></pre>
+<pre><code>Data version: Nov 2025 onboarding form combined with Sept 2026 roster</code></pre>
+<pre><code>People in both: 313 | Nov 2025 only: 126 | Sept 2026 only: 72 </code></pre>
+</div>
+<div id="data-preprocessing" class="section level2">
+<h2>Data preprocessing</h2>
+<pre><code>Total people after cleaning: 511 </code></pre>
+<pre><code>People with an onboarding date: 439 </code></pre>
+<pre><code>Date range: 2022-06-04 to 2025-08-08 </code></pre>
+<pre><code>
+Career stage inferred.</code></pre>
+<pre><code>Career stages identified from: trainee, srKey, and degrees columns</code></pre>
+<pre><code>Created anonymized institution IDs for 84 unique institutions</code></pre>
+</div>
+<div id="basic-descriptive-statistics" class="section level2">
+<h2>Basic descriptive statistics</h2>
+<div id="overall-consortium-composition" class="section level3">
+<h3>Overall consortium composition</h3>
+<table class="table table-striped table-hover table-condensed" style="width: auto !important; margin-left: auto; margin-right: auto;">
+<caption>
+B2AI consortium composition summary
+</caption>
+<thead>
+<tr>
+<th style="text-align:left;">
+Metric
+</th>
+<th style="text-align:right;">
+Count
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+Total participants
+</td>
+<td style="text-align:right;">
+511
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Complete responses
+</td>
+<td style="text-align:right;">
+511
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Incomplete responses
+</td>
+<td style="text-align:right;">
+0
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Senior key personnel
+</td>
+<td style="text-align:right;">
+85
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Trainees (all types)
+</td>
+<td style="text-align:right;">
+100
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+DGP participants
+</td>
+<td style="text-align:right;">
+289
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Core participants
+</td>
+<td style="text-align:right;">
+182
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Both DGP and Core
+</td>
+<td style="text-align:right;">
+39
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Unique institutions
+</td>
+<td style="text-align:right;">
+84
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Unique countries
+</td>
+<td style="text-align:right;">
+5
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Multi-DGP participants
+</td>
+<td style="text-align:right;">
+25
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Multi-core participants
+</td>
+<td style="text-align:right;">
+45
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="career-stage-distribution" class="section level3">
+<h3>Career stage distribution</h3>
+<table class="table table-striped table-hover table-condensed" style="width: auto !important; margin-left: auto; margin-right: auto;">
+<caption>
+Career stage distribution (inferred)
+</caption>
+<thead>
+<tr>
+<th style="text-align:left;">
+Career stage
+</th>
+<th style="text-align:right;">
+Count
+</th>
+<th style="text-align:right;">
+Percent
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+Mid (established)
+</td>
+<td style="text-align:right;">
+173
+</td>
+<td style="text-align:right;">
+33.9
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Senior (established)
+</td>
+<td style="text-align:right;">
+75
+</td>
+<td style="text-align:right;">
+14.7
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Mid (professional)
+</td>
+<td style="text-align:right;">
+71
+</td>
+<td style="text-align:right;">
+13.9
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Early (staff)
+</td>
+<td style="text-align:right;">
+63
+</td>
+<td style="text-align:right;">
+12.3
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Early (trainee)
+</td>
+<td style="text-align:right;">
+53
+</td>
+<td style="text-align:right;">
+10.4
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Unknown
+</td>
+<td style="text-align:right;">
+43
+</td>
+<td style="text-align:right;">
+8.4
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Early (career)
+</td>
+<td style="text-align:right;">
+33
+</td>
+<td style="text-align:right;">
+6.5
+</td>
+</tr>
+</tbody>
+</table>
+<table class="table table-striped table-hover table-condensed" style="width: auto !important; margin-left: auto; margin-right: auto;">
+<caption>
+Simplified career stage distribution
+</caption>
+<thead>
+<tr>
+<th style="text-align:left;">
+Career stage
+</th>
+<th style="text-align:right;">
+Count
+</th>
+<th style="text-align:right;">
+Percent
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+Mid
+</td>
+<td style="text-align:right;">
+244
+</td>
+<td style="text-align:right;">
+47.7
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Early
+</td>
+<td style="text-align:right;">
+149
+</td>
+<td style="text-align:right;">
+29.2
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Senior
+</td>
+<td style="text-align:right;">
+75
+</td>
+<td style="text-align:right;">
+14.7
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Unknown
+</td>
+<td style="text-align:right;">
+43
+</td>
+<td style="text-align:right;">
+8.4
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="dgp-and-core-participation-summary" class="section level3">
+<h3>DGP and core participation summary</h3>
+<table class="table table-striped table-hover table-condensed" style="width: auto !important; margin-left: auto; margin-right: auto;">
+<caption>
+Participation counts by DGP and core
+</caption>
+<thead>
+<tr>
+<th style="text-align:left;">
+Component
+</th>
+<th style="text-align:right;">
+DGP
+</th>
+<th style="text-align:right;">
+Core
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+Voice
+</td>
+<td style="text-align:right;">
+75
+</td>
+<td style="text-align:right;">
+NA
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+AI-READi
+</td>
+<td style="text-align:right;">
+86
+</td>
+<td style="text-align:right;">
+NA
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+CHoRUS
+</td>
+<td style="text-align:right;">
+96
+</td>
+<td style="text-align:right;">
+NA
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+CM4AI
+</td>
+<td style="text-align:right;">
+67
+</td>
+<td style="text-align:right;">
+NA
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Admin
+</td>
+<td style="text-align:right;">
+NA
+</td>
+<td style="text-align:right;">
+35
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Ethics
+</td>
+<td style="text-align:right;">
+NA
+</td>
+<td style="text-align:right;">
+55
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Teaming
+</td>
+<td style="text-align:right;">
+NA
+</td>
+<td style="text-align:right;">
+47
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Standards
+</td>
+<td style="text-align:right;">
+NA
+</td>
+<td style="text-align:right;">
+64
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Tools
+</td>
+<td style="text-align:right;">
+NA
+</td>
+<td style="text-align:right;">
+36
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+SWD
+</td>
+<td style="text-align:right;">
+NA
+</td>
+<td style="text-align:right;">
+34
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div id="temporal-evolution-of-the-consortium" class="section level2">
+<h2>Temporal evolution of the consortium</h2>
+<div id="onboarding-over-time" class="section level3">
+<h3>Onboarding over time</h3>
+<p><img src="figure/onboarding.rmd/temporal-onboarding-1.png" alt="" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-temporal-onboarding-1">
+Past versions of temporal-onboarding-1.png
+</button>
+</p>
+<div id="fig-temporal-onboarding-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/jananiravi/b2ai_survey/blob/5604aa52b14ac44179d3156683a92185d7851398/docs/figure/onboarding.rmd/temporal-onboarding-1.png" target="_blank">5604aa5</a>
+</td>
+<td>
+Emily Boyer
+</td>
+<td>
+2026-10-16
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/jananiravi/b2ai_survey/blob/7099f8bd606242f57a1fe7df23e36b9b11a5397f/docs/figure/onboarding.rmd/temporal-onboarding-1.png" target="_blank">7099f8b</a>
+</td>
+<td>
+Emily Boyer
+</td>
+<td>
+2026-10-02
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/jananiravi/b2ai_survey/blob/66ad9df1d6cc75a1c63a9314a1937ff5f5ddb808/docs/figure/onboarding.rmd/temporal-onboarding-1.png" target="_blank">66ad9df</a>
+</td>
+<td>
+Emily Boyer
+</td>
+<td>
+2026-10-01
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/jananiravi/b2ai_survey/blob/4ae8e85da5f44a2b2614cc0065fcabd5ea60c6ba/docs/figure/onboarding.rmd/temporal-onboarding-1.png" target="_blank">4ae8e85</a>
+</td>
+<td>
+Emily Boyer
+</td>
+<td>
+2026-10-01
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/jananiravi/b2ai_survey/blob/609d00d6dbd06b7eab477f82f44a509b8263a37b/docs/figure/onboarding.rmd/temporal-onboarding-1.png" target="_blank">609d00d</a>
+</td>
+<td>
+Janani Ravi
+</td>
+<td>
+2025-11-20
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<div id="onboarding-by-dgp-over-time" class="section level3">
+<h3>Onboarding by DGP over time</h3>
+<p><img src="figure/onboarding.rmd/temporal-dgp-1.png" alt="" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-temporal-dgp-1">
+Past versions of temporal-dgp-1.png
+</button>
+</p>
+<div id="fig-temporal-dgp-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/jananiravi/b2ai_survey/blob/5604aa52b14ac44179d3156683a92185d7851398/docs/figure/onboarding.rmd/temporal-dgp-1.png" target="_blank">5604aa5</a>
+</td>
+<td>
+Emily Boyer
+</td>
+<td>
+2026-10-16
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/jananiravi/b2ai_survey/blob/7099f8bd606242f57a1fe7df23e36b9b11a5397f/docs/figure/onboarding.rmd/temporal-dgp-1.png" target="_blank">7099f8b</a>
+</td>
+<td>
+Emily Boyer
+</td>
+<td>
+2026-10-02
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/jananiravi/b2ai_survey/blob/66ad9df1d6cc75a1c63a9314a1937ff5f5ddb808/docs/figure/onboarding.rmd/temporal-dgp-1.png" target="_blank">66ad9df</a>
+</td>
+<td>
+Emily Boyer
+</td>
+<td>
+2026-10-01
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/jananiravi/b2ai_survey/blob/4ae8e85da5f44a2b2614cc0065fcabd5ea60c6ba/docs/figure/onboarding.rmd/temporal-dgp-1.png" target="_blank">4ae8e85</a>
+</td>
+<td>
+Emily Boyer
+</td>
+<td>
+2026-10-01
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/jananiravi/b2ai_survey/blob/609d00d6dbd06b7eab477f82f44a509b8263a37b/docs/figure/onboarding.rmd/temporal-dgp-1.png" target="_blank">609d00d</a>
+</td>
+<td>
+Janani Ravi
+</td>
+<td>
+2025-11-20
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<div id="cumulative-growth-by-component" class="section level3">
+<h3>Cumulative growth by component</h3>
+<p><img src="figure/onboarding.rmd/cumulative-growth-1.png" alt="" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-cumulative-growth-1">
+Past versions of cumulative-growth-1.png
+</button>
+</p>
+<div id="fig-cumulative-growth-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/jananiravi/b2ai_survey/blob/5604aa52b14ac44179d3156683a92185d7851398/docs/figure/onboarding.rmd/cumulative-growth-1.png" target="_blank">5604aa5</a>
+</td>
+<td>
+Emily Boyer
+</td>
+<td>
+2026-10-16
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/jananiravi/b2ai_survey/blob/7099f8bd606242f57a1fe7df23e36b9b11a5397f/docs/figure/onboarding.rmd/cumulative-growth-1.png" target="_blank">7099f8b</a>
+</td>
+<td>
+Emily Boyer
+</td>
+<td>
+2026-10-02
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/jananiravi/b2ai_survey/blob/66ad9df1d6cc75a1c63a9314a1937ff5f5ddb808/docs/figure/onboarding.rmd/cumulative-growth-1.png" target="_blank">66ad9df</a>
+</td>
+<td>
+Emily Boyer
+</td>
+<td>
+2026-10-01
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/jananiravi/b2ai_survey/blob/4ae8e85da5f44a2b2614cc0065fcabd5ea60c6ba/docs/figure/onboarding.rmd/cumulative-growth-1.png" target="_blank">4ae8e85</a>
+</td>
+<td>
+Emily Boyer
+</td>
+<td>
+2026-10-01
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/jananiravi/b2ai_survey/blob/609d00d6dbd06b7eab477f82f44a509b8263a37b/docs/figure/onboarding.rmd/cumulative-growth-1.png" target="_blank">609d00d</a>
+</td>
+<td>
+Janani Ravi
+</td>
+<td>
+2025-11-20
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<div id="career-stage-evolution-over-time" class="section level3">
+<h3>Career stage evolution over time</h3>
+<p><img src="figure/onboarding.rmd/temporal-career-stage-1.png" alt="" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-temporal-career-stage-1">
+Past versions of temporal-career-stage-1.png
+</button>
+</p>
+<div id="fig-temporal-career-stage-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/jananiravi/b2ai_survey/blob/5604aa52b14ac44179d3156683a92185d7851398/docs/figure/onboarding.rmd/temporal-career-stage-1.png" target="_blank">5604aa5</a>
+</td>
+<td>
+Emily Boyer
+</td>
+<td>
+2026-10-16
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/jananiravi/b2ai_survey/blob/7099f8bd606242f57a1fe7df23e36b9b11a5397f/docs/figure/onboarding.rmd/temporal-career-stage-1.png" target="_blank">7099f8b</a>
+</td>
+<td>
+Emily Boyer
+</td>
+<td>
+2026-10-02
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/jananiravi/b2ai_survey/blob/66ad9df1d6cc75a1c63a9314a1937ff5f5ddb808/docs/figure/onboarding.rmd/temporal-career-stage-1.png" target="_blank">66ad9df</a>
+</td>
+<td>
+Emily Boyer
+</td>
+<td>
+2026-10-01
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/jananiravi/b2ai_survey/blob/4ae8e85da5f44a2b2614cc0065fcabd5ea60c6ba/docs/figure/onboarding.rmd/temporal-career-stage-1.png" target="_blank">4ae8e85</a>
+</td>
+<td>
+Emily Boyer
+</td>
+<td>
+2026-10-01
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/jananiravi/b2ai_survey/blob/609d00d6dbd06b7eab477f82f44a509b8263a37b/docs/figure/onboarding.rmd/temporal-career-stage-1.png" target="_blank">609d00d</a>
+</td>
+<td>
+Janani Ravi
+</td>
+<td>
+2025-11-20
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p><img src="figure/onboarding.rmd/temporal-career-stage-2.png" alt="" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-temporal-career-stage-2">
+Past versions of temporal-career-stage-2.png
+</button>
+</p>
+<div id="fig-temporal-career-stage-2" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/jananiravi/b2ai_survey/blob/5604aa52b14ac44179d3156683a92185d7851398/docs/figure/onboarding.rmd/temporal-career-stage-2.png" target="_blank">5604aa5</a>
+</td>
+<td>
+Emily Boyer
+</td>
+<td>
+2026-10-16
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/jananiravi/b2ai_survey/blob/7099f8bd606242f57a1fe7df23e36b9b11a5397f/docs/figure/onboarding.rmd/temporal-career-stage-2.png" target="_blank">7099f8b</a>
+</td>
+<td>
+Emily Boyer
+</td>
+<td>
+2026-10-02
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/jananiravi/b2ai_survey/blob/66ad9df1d6cc75a1c63a9314a1937ff5f5ddb808/docs/figure/onboarding.rmd/temporal-career-stage-2.png" target="_blank">66ad9df</a>
+</td>
+<td>
+Emily Boyer
+</td>
+<td>
+2026-10-01
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/jananiravi/b2ai_survey/blob/4ae8e85da5f44a2b2614cc0065fcabd5ea60c6ba/docs/figure/onboarding.rmd/temporal-career-stage-2.png" target="_blank">4ae8e85</a>
+</td>
+<td>
+Emily Boyer
+</td>
+<td>
+2026-10-01
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/jananiravi/b2ai_survey/blob/609d00d6dbd06b7eab477f82f44a509b8263a37b/docs/figure/onboarding.rmd/temporal-career-stage-2.png" target="_blank">609d00d</a>
+</td>
+<td>
+Janani Ravi
+</td>
+<td>
+2025-11-20
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</div>
+<div id="institutional-and-geographic-diversity" class="section level2">
+<h2>Institutional and geographic diversity</h2>
+<div id="institution-type-distribution" class="section level3">
+<h3>Institution type distribution</h3>
+<table class="table table-striped table-hover table-condensed" style="width: auto !important; margin-left: auto; margin-right: auto;">
+<caption>
+Distribution of institution types
+</caption>
+<thead>
+<tr>
+<th style="text-align:left;">
+Institution type
+</th>
+<th style="text-align:right;">
+Participants
+</th>
+<th style="text-align:right;">
+Percent
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+Academia
+</td>
+<td style="text-align:right;">
+334
+</td>
+<td style="text-align:right;">
+65.4
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Other/Unknown
+</td>
+<td style="text-align:right;">
+55
+</td>
+<td style="text-align:right;">
+10.8
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Healthcare/Clinical
+</td>
+<td style="text-align:right;">
+45
+</td>
+<td style="text-align:right;">
+8.8
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Non-profit research
+</td>
+<td style="text-align:right;">
+45
+</td>
+<td style="text-align:right;">
+8.8
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Government
+</td>
+<td style="text-align:right;">
+30
+</td>
+<td style="text-align:right;">
+5.9
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Industry
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:right;">
+0.4
+</td>
+</tr>
+</tbody>
+</table>
+<p><img src="figure/onboarding.rmd/institution-type-1.png" alt="" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-institution-type-1">
+Past versions of institution-type-1.png
+</button>
+</p>
+<div id="fig-institution-type-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/jananiravi/b2ai_survey/blob/5604aa52b14ac44179d3156683a92185d7851398/docs/figure/onboarding.rmd/institution-type-1.png" target="_blank">5604aa5</a>
+</td>
+<td>
+Emily Boyer
+</td>
+<td>
+2026-10-16
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/jananiravi/b2ai_survey/blob/7099f8bd606242f57a1fe7df23e36b9b11a5397f/docs/figure/onboarding.rmd/institution-type-1.png" target="_blank">7099f8b</a>
+</td>
+<td>
+Emily Boyer
+</td>
+<td>
+2026-10-02
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/jananiravi/b2ai_survey/blob/66ad9df1d6cc75a1c63a9314a1937ff5f5ddb808/docs/figure/onboarding.rmd/institution-type-1.png" target="_blank">66ad9df</a>
+</td>
+<td>
+Emily Boyer
+</td>
+<td>
+2026-10-01
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/jananiravi/b2ai_survey/blob/4ae8e85da5f44a2b2614cc0065fcabd5ea60c6ba/docs/figure/onboarding.rmd/institution-type-1.png" target="_blank">4ae8e85</a>
+</td>
+<td>
+Emily Boyer
+</td>
+<td>
+2026-10-01
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/jananiravi/b2ai_survey/blob/609d00d6dbd06b7eab477f82f44a509b8263a37b/docs/figure/onboarding.rmd/institution-type-1.png" target="_blank">609d00d</a>
+</td>
+<td>
+Janani Ravi
+</td>
+<td>
+2025-11-20
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<div id="top-participating-institutions-with-names" class="section level3 tabset">
+<h3 class="tabset">Top participating institutions (with names)</h3>
+<div id="top-20-institutions" class="section level4">
+<h4>Top 20 institutions</h4>
+<table class="table table-striped table-hover table-condensed" style="width: auto !important; margin-left: auto; margin-right: auto;">
+<caption>
+Top 20 participating institutions (with names)
+</caption>
+<thead>
+<tr>
+<th style="text-align:left;">
+Institution
+</th>
+<th style="text-align:left;">
+Type
+</th>
+<th style="text-align:right;">
+Participants
+</th>
+<th style="text-align:right;">
+Percent
+</th>
+<th style="text-align:right;">
+Cumulative %
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+University of California
+</td>
+<td style="text-align:left;">
+Academia
+</td>
+<td style="text-align:right;">
+55
+</td>
+<td style="text-align:right;">
+11.3
+</td>
+<td style="text-align:right;">
+11.3
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Oregon Health &amp; Science University
+</td>
+<td style="text-align:left;">
+Academia
+</td>
+<td style="text-align:right;">
+24
+</td>
+<td style="text-align:right;">
+4.9
+</td>
+<td style="text-align:right;">
+16.3
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Sage Bionetworks
+</td>
+<td style="text-align:left;">
+Non-profit research
+</td>
+<td style="text-align:right;">
+24
+</td>
+<td style="text-align:right;">
+4.9
+</td>
+<td style="text-align:right;">
+21.2
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Simon Fraser University
+</td>
+<td style="text-align:left;">
+Academia
+</td>
+<td style="text-align:right;">
+20
+</td>
+<td style="text-align:right;">
+4.1
+</td>
+<td style="text-align:right;">
+25.4
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Yale University
+</td>
+<td style="text-align:left;">
+Academia
+</td>
+<td style="text-align:right;">
+20
+</td>
+<td style="text-align:right;">
+4.1
+</td>
+<td style="text-align:right;">
+29.5
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+National Institutes of Health
+</td>
+<td style="text-align:left;">
+Government
+</td>
+<td style="text-align:right;">
+19
+</td>
+<td style="text-align:right;">
+3.9
+</td>
+<td style="text-align:right;">
+33.4
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Johns Hopkins University
+</td>
+<td style="text-align:left;">
+Academia
+</td>
+<td style="text-align:right;">
+17
+</td>
+<td style="text-align:right;">
+3.5
+</td>
+<td style="text-align:right;">
+36.9
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Vanderbilt University Medical Center
+</td>
+<td style="text-align:left;">
+Academia
+</td>
+<td style="text-align:right;">
+17
+</td>
+<td style="text-align:right;">
+3.5
+</td>
+<td style="text-align:right;">
+40.4
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+University of Florida
+</td>
+<td style="text-align:left;">
+Academia
+</td>
+<td style="text-align:right;">
+15
+</td>
+<td style="text-align:right;">
+3.1
+</td>
+<td style="text-align:right;">
+43.5
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+University of South Florida
+</td>
+<td style="text-align:left;">
+Academia
+</td>
+<td style="text-align:right;">
+14
+</td>
+<td style="text-align:right;">
+2.9
+</td>
+<td style="text-align:right;">
+46.4
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+University of California, San Diego
+</td>
+<td style="text-align:left;">
+Academia
+</td>
+<td style="text-align:right;">
+13
+</td>
+<td style="text-align:right;">
+2.7
+</td>
+<td style="text-align:right;">
+49.1
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Duke University
+</td>
+<td style="text-align:left;">
+Academia
+</td>
+<td style="text-align:right;">
+12
+</td>
+<td style="text-align:right;">
+2.5
+</td>
+<td style="text-align:right;">
+51.5
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Massachusetts General Hospital
+</td>
+<td style="text-align:left;">
+Healthcare/Clinical
+</td>
+<td style="text-align:right;">
+12
+</td>
+<td style="text-align:right;">
+2.5
+</td>
+<td style="text-align:right;">
+54.0
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+University of Colorado
+</td>
+<td style="text-align:left;">
+Academia
+</td>
+<td style="text-align:right;">
+12
+</td>
+<td style="text-align:right;">
+2.5
+</td>
+<td style="text-align:right;">
+56.5
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Nationwide Children’s Hospital
+</td>
+<td style="text-align:left;">
+Healthcare/Clinical
+</td>
+<td style="text-align:right;">
+11
+</td>
+<td style="text-align:right;">
+2.3
+</td>
+<td style="text-align:right;">
+58.8
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+University of Virginia
+</td>
+<td style="text-align:left;">
+Academia
+</td>
+<td style="text-align:right;">
+11
+</td>
+<td style="text-align:right;">
+2.3
+</td>
+<td style="text-align:right;">
+61.0
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+University of Alabama at Birmingham
+</td>
+<td style="text-align:left;">
+Academia
+</td>
+<td style="text-align:right;">
+10
+</td>
+<td style="text-align:right;">
+2.1
+</td>
+<td style="text-align:right;">
+63.1
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+University of Washington
+</td>
+<td style="text-align:left;">
+Academia
+</td>
+<td style="text-align:right;">
+10
+</td>
+<td style="text-align:right;">
+2.1
+</td>
+<td style="text-align:right;">
+65.2
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Stanford University
+</td>
+<td style="text-align:left;">
+Academia
+</td>
+<td style="text-align:right;">
+9
+</td>
+<td style="text-align:right;">
+1.9
+</td>
+<td style="text-align:right;">
+67.0
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Emory University
+</td>
+<td style="text-align:left;">
+Academia
+</td>
+<td style="text-align:right;">
+8
+</td>
+<td style="text-align:right;">
+1.6
+</td>
+<td style="text-align:right;">
+68.7
+</td>
+</tr>
+</tbody>
+</table>
+<p><img src="figure/onboarding.rmd/top-institutions-named-1.png" alt="" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-top-institutions-named-1">
+Past versions of top-institutions-named-1.png
+</button>
+</p>
+<div id="fig-top-institutions-named-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/jananiravi/b2ai_survey/blob/5604aa52b14ac44179d3156683a92185d7851398/docs/figure/onboarding.rmd/top-institutions-named-1.png" target="_blank">5604aa5</a>
+</td>
+<td>
+Emily Boyer
+</td>
+<td>
+2026-10-16
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/jananiravi/b2ai_survey/blob/7099f8bd606242f57a1fe7df23e36b9b11a5397f/docs/figure/onboarding.rmd/top-institutions-named-1.png" target="_blank">7099f8b</a>
+</td>
+<td>
+Emily Boyer
+</td>
+<td>
+2026-10-02
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/jananiravi/b2ai_survey/blob/66ad9df1d6cc75a1c63a9314a1937ff5f5ddb808/docs/figure/onboarding.rmd/top-institutions-named-1.png" target="_blank">66ad9df</a>
+</td>
+<td>
+Emily Boyer
+</td>
+<td>
+2026-10-01
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/jananiravi/b2ai_survey/blob/4ae8e85da5f44a2b2614cc0065fcabd5ea60c6ba/docs/figure/onboarding.rmd/top-institutions-named-1.png" target="_blank">4ae8e85</a>
+</td>
+<td>
+Emily Boyer
+</td>
+<td>
+2026-10-01
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/jananiravi/b2ai_survey/blob/609d00d6dbd06b7eab477f82f44a509b8263a37b/docs/figure/onboarding.rmd/top-institutions-named-1.png" target="_blank">609d00d</a>
+</td>
+<td>
+Janani Ravi
+</td>
+<td>
+2025-11-20
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<div id="concentration-metrics" class="section level4">
+<h4>Concentration metrics</h4>
+<table class="table table-striped table-hover table-condensed" style="width: auto !important; margin-left: auto; margin-right: auto;">
+<caption>
+Institutional concentration metrics
+</caption>
+<thead>
+<tr>
+<th style="text-align:left;">
+Metric
+</th>
+<th style="text-align:left;">
+Value
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+Total unique institutions (excluding ‘Other’)
+</td>
+<td style="text-align:left;">
+84 institutions
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Top 5 institutions represent
+</td>
+<td style="text-align:left;">
+29.5% of participants
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Top 10 institutions represent
+</td>
+<td style="text-align:left;">
+46.4% of participants
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Top 20 institutions represent
+</td>
+<td style="text-align:left;">
+68.7% of participants
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Remaining institutions represent
+</td>
+<td style="text-align:left;">
+31.3% of participants
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div id="top-participating-institutions-anonymized" class="section level3 tabset">
+<h3 class="tabset">Top participating institutions (anonymized)</h3>
+<div id="top-20-anonymized" class="section level4">
+<h4>Top 20 anonymized</h4>
+<table class="table table-striped table-hover table-condensed" style="width: auto !important; margin-left: auto; margin-right: auto;">
+<caption>
+Top 20 participating institutions (anonymized)
+</caption>
+<thead>
+<tr>
+<th style="text-align:left;">
+Institution ID
+</th>
+<th style="text-align:left;">
+Type
+</th>
+<th style="text-align:right;">
+Participants
+</th>
+<th style="text-align:right;">
+Percent
+</th>
+<th style="text-align:right;">
+Cumulative %
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+Academia_60
+</td>
+<td style="text-align:left;">
+Academia
+</td>
+<td style="text-align:right;">
+55
+</td>
+<td style="text-align:right;">
+11.3
+</td>
+<td style="text-align:right;">
+11.3
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Academia_38
+</td>
+<td style="text-align:left;">
+Academia
+</td>
+<td style="text-align:right;">
+24
+</td>
+<td style="text-align:right;">
+4.9
+</td>
+<td style="text-align:right;">
+16.3
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Non-profit research_40
+</td>
+<td style="text-align:left;">
+Non-profit research
+</td>
+<td style="text-align:right;">
+24
+</td>
+<td style="text-align:right;">
+4.9
+</td>
+<td style="text-align:right;">
+21.2
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Academia_44
+</td>
+<td style="text-align:left;">
+Academia
+</td>
+<td style="text-align:right;">
+20
+</td>
+<td style="text-align:right;">
+4.1
+</td>
+<td style="text-align:right;">
+25.4
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Academia_84
+</td>
+<td style="text-align:left;">
+Academia
+</td>
+<td style="text-align:right;">
+20
+</td>
+<td style="text-align:right;">
+4.1
+</td>
+<td style="text-align:right;">
+29.5
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Government_33
+</td>
+<td style="text-align:left;">
+Government
+</td>
+<td style="text-align:right;">
+19
+</td>
+<td style="text-align:right;">
+3.9
+</td>
+<td style="text-align:right;">
+33.4
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Academia_16
+</td>
+<td style="text-align:left;">
+Academia
+</td>
+<td style="text-align:right;">
+17
+</td>
+<td style="text-align:right;">
+3.5
+</td>
+<td style="text-align:right;">
+36.9
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Academia_80
+</td>
+<td style="text-align:left;">
+Academia
+</td>
+<td style="text-align:right;">
+17
+</td>
+<td style="text-align:right;">
+3.5
+</td>
+<td style="text-align:right;">
+40.4
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Academia_68
+</td>
+<td style="text-align:left;">
+Academia
+</td>
+<td style="text-align:right;">
+15
+</td>
+<td style="text-align:right;">
+3.1
+</td>
+<td style="text-align:right;">
+43.5
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Academia_73
+</td>
+<td style="text-align:left;">
+Academia
+</td>
+<td style="text-align:right;">
+14
+</td>
+<td style="text-align:right;">
+2.9
+</td>
+<td style="text-align:right;">
+46.4
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Academia_63
+</td>
+<td style="text-align:left;">
+Academia
+</td>
+<td style="text-align:right;">
+13
+</td>
+<td style="text-align:right;">
+2.7
+</td>
+<td style="text-align:right;">
+49.1
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Academia_65
+</td>
+<td style="text-align:left;">
+Academia
+</td>
+<td style="text-align:right;">
+12
+</td>
+<td style="text-align:right;">
+2.5
+</td>
+<td style="text-align:right;">
+51.5
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Academia_9
+</td>
+<td style="text-align:left;">
+Academia
+</td>
+<td style="text-align:right;">
+12
+</td>
+<td style="text-align:right;">
+2.5
+</td>
+<td style="text-align:right;">
+54.0
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Healthcare/Clinical_19
+</td>
+<td style="text-align:left;">
+Healthcare/Clinical
+</td>
+<td style="text-align:right;">
+12
+</td>
+<td style="text-align:right;">
+2.5
+</td>
+<td style="text-align:right;">
+56.5
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Academia_77
+</td>
+<td style="text-align:left;">
+Academia
+</td>
+<td style="text-align:right;">
+11
+</td>
+<td style="text-align:right;">
+2.3
+</td>
+<td style="text-align:right;">
+58.8
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Healthcare/Clinical_35
+</td>
+<td style="text-align:left;">
+Healthcare/Clinical
+</td>
+<td style="text-align:right;">
+11
+</td>
+<td style="text-align:right;">
+2.3
+</td>
+<td style="text-align:right;">
+61.0
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Academia_57
+</td>
+<td style="text-align:left;">
+Academia
+</td>
+<td style="text-align:right;">
+10
+</td>
+<td style="text-align:right;">
+2.1
+</td>
+<td style="text-align:right;">
+63.1
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Academia_78
+</td>
+<td style="text-align:left;">
+Academia
+</td>
+<td style="text-align:right;">
+10
+</td>
+<td style="text-align:right;">
+2.1
+</td>
+<td style="text-align:right;">
+65.2
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Academia_46
+</td>
+<td style="text-align:left;">
+Academia
+</td>
+<td style="text-align:right;">
+9
+</td>
+<td style="text-align:right;">
+1.9
+</td>
+<td style="text-align:right;">
+67.0
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Academia_11
+</td>
+<td style="text-align:left;">
+Academia
+</td>
+<td style="text-align:right;">
+8
+</td>
+<td style="text-align:right;">
+1.6
+</td>
+<td style="text-align:right;">
+68.7
+</td>
+</tr>
+</tbody>
+</table>
+<p><img src="figure/onboarding.rmd/top-institutions-anon-1.png" alt="" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-top-institutions-anon-1">
+Past versions of top-institutions-anon-1.png
+</button>
+</p>
+<div id="fig-top-institutions-anon-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/jananiravi/b2ai_survey/blob/5604aa52b14ac44179d3156683a92185d7851398/docs/figure/onboarding.rmd/top-institutions-anon-1.png" target="_blank">5604aa5</a>
+</td>
+<td>
+Emily Boyer
+</td>
+<td>
+2026-10-16
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/jananiravi/b2ai_survey/blob/7099f8bd606242f57a1fe7df23e36b9b11a5397f/docs/figure/onboarding.rmd/top-institutions-anon-1.png" target="_blank">7099f8b</a>
+</td>
+<td>
+Emily Boyer
+</td>
+<td>
+2026-10-02
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/jananiravi/b2ai_survey/blob/66ad9df1d6cc75a1c63a9314a1937ff5f5ddb808/docs/figure/onboarding.rmd/top-institutions-anon-1.png" target="_blank">66ad9df</a>
+</td>
+<td>
+Emily Boyer
+</td>
+<td>
+2026-10-01
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/jananiravi/b2ai_survey/blob/4ae8e85da5f44a2b2614cc0065fcabd5ea60c6ba/docs/figure/onboarding.rmd/top-institutions-anon-1.png" target="_blank">4ae8e85</a>
+</td>
+<td>
+Emily Boyer
+</td>
+<td>
+2026-10-01
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/jananiravi/b2ai_survey/blob/609d00d6dbd06b7eab477f82f44a509b8263a37b/docs/figure/onboarding.rmd/top-institutions-anon-1.png" target="_blank">609d00d</a>
+</td>
+<td>
+Janani Ravi
+</td>
+<td>
+2025-11-20
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<div id="by-type-only" class="section level4">
+<h4>By type only</h4>
+<p><img src="figure/onboarding.rmd/institutions-type-only-1.png" alt="" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-institutions-type-only-1">
+Past versions of institutions-type-only-1.png
+</button>
+</p>
+<div id="fig-institutions-type-only-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/jananiravi/b2ai_survey/blob/5604aa52b14ac44179d3156683a92185d7851398/docs/figure/onboarding.rmd/institutions-type-only-1.png" target="_blank">5604aa5</a>
+</td>
+<td>
+Emily Boyer
+</td>
+<td>
+2026-10-16
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/jananiravi/b2ai_survey/blob/7099f8bd606242f57a1fe7df23e36b9b11a5397f/docs/figure/onboarding.rmd/institutions-type-only-1.png" target="_blank">7099f8b</a>
+</td>
+<td>
+Emily Boyer
+</td>
+<td>
+2026-10-02
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/jananiravi/b2ai_survey/blob/66ad9df1d6cc75a1c63a9314a1937ff5f5ddb808/docs/figure/onboarding.rmd/institutions-type-only-1.png" target="_blank">66ad9df</a>
+</td>
+<td>
+Emily Boyer
+</td>
+<td>
+2026-10-01
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/jananiravi/b2ai_survey/blob/4ae8e85da5f44a2b2614cc0065fcabd5ea60c6ba/docs/figure/onboarding.rmd/institutions-type-only-1.png" target="_blank">4ae8e85</a>
+</td>
+<td>
+Emily Boyer
+</td>
+<td>
+2026-10-01
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/jananiravi/b2ai_survey/blob/609d00d6dbd06b7eab477f82f44a509b8263a37b/docs/figure/onboarding.rmd/institutions-type-only-1.png" target="_blank">609d00d</a>
+</td>
+<td>
+Janani Ravi
+</td>
+<td>
+2025-11-20
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</div>
+<div id="geographic-distribution" class="section level3">
+<h3>Geographic distribution</h3>
+<table class="table table-striped table-hover table-condensed" style="width: auto !important; margin-left: auto; margin-right: auto;">
+<caption>
+Participants by country
+</caption>
+<thead>
+<tr>
+<th style="text-align:left;">
+Country
+</th>
+<th style="text-align:right;">
+Participants
+</th>
+<th style="text-align:right;">
+Percent
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+USA
+</td>
+<td style="text-align:right;">
+114
+</td>
+<td style="text-align:right;">
+87.0
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Canada
+</td>
+<td style="text-align:right;">
+12
+</td>
+<td style="text-align:right;">
+9.2
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+France
+</td>
+<td style="text-align:right;">
+3
+</td>
+<td style="text-align:right;">
+2.3
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+UK
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+0.8
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Ukraine
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+0.8
+</td>
+</tr>
+</tbody>
+</table>
+<p><img src="figure/onboarding.rmd/geographic-distribution-1.png" alt="" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-geographic-distribution-1">
+Past versions of geographic-distribution-1.png
+</button>
+</p>
+<div id="fig-geographic-distribution-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/jananiravi/b2ai_survey/blob/5604aa52b14ac44179d3156683a92185d7851398/docs/figure/onboarding.rmd/geographic-distribution-1.png" target="_blank">5604aa5</a>
+</td>
+<td>
+Emily Boyer
+</td>
+<td>
+2026-10-16
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/jananiravi/b2ai_survey/blob/7099f8bd606242f57a1fe7df23e36b9b11a5397f/docs/figure/onboarding.rmd/geographic-distribution-1.png" target="_blank">7099f8b</a>
+</td>
+<td>
+Emily Boyer
+</td>
+<td>
+2026-10-02
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/jananiravi/b2ai_survey/blob/66ad9df1d6cc75a1c63a9314a1937ff5f5ddb808/docs/figure/onboarding.rmd/geographic-distribution-1.png" target="_blank">66ad9df</a>
+</td>
+<td>
+Emily Boyer
+</td>
+<td>
+2026-10-01
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/jananiravi/b2ai_survey/blob/4ae8e85da5f44a2b2614cc0065fcabd5ea60c6ba/docs/figure/onboarding.rmd/geographic-distribution-1.png" target="_blank">4ae8e85</a>
+</td>
+<td>
+Emily Boyer
+</td>
+<td>
+2026-10-01
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/jananiravi/b2ai_survey/blob/609d00d6dbd06b7eab477f82f44a509b8263a37b/docs/figure/onboarding.rmd/geographic-distribution-1.png" target="_blank">609d00d</a>
+</td>
+<td>
+Janani Ravi
+</td>
+<td>
+2025-11-20
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p><img src="figure/onboarding.rmd/geographic-distribution-2.png" alt="" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-geographic-distribution-2">
+Past versions of geographic-distribution-2.png
+</button>
+</p>
+<div id="fig-geographic-distribution-2" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/jananiravi/b2ai_survey/blob/5604aa52b14ac44179d3156683a92185d7851398/docs/figure/onboarding.rmd/geographic-distribution-2.png" target="_blank">5604aa5</a>
+</td>
+<td>
+Emily Boyer
+</td>
+<td>
+2026-10-16
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/jananiravi/b2ai_survey/blob/7099f8bd606242f57a1fe7df23e36b9b11a5397f/docs/figure/onboarding.rmd/geographic-distribution-2.png" target="_blank">7099f8b</a>
+</td>
+<td>
+Emily Boyer
+</td>
+<td>
+2026-10-02
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/jananiravi/b2ai_survey/blob/66ad9df1d6cc75a1c63a9314a1937ff5f5ddb808/docs/figure/onboarding.rmd/geographic-distribution-2.png" target="_blank">66ad9df</a>
+</td>
+<td>
+Emily Boyer
+</td>
+<td>
+2026-10-01
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/jananiravi/b2ai_survey/blob/4ae8e85da5f44a2b2614cc0065fcabd5ea60c6ba/docs/figure/onboarding.rmd/geographic-distribution-2.png" target="_blank">4ae8e85</a>
+</td>
+<td>
+Emily Boyer
+</td>
+<td>
+2026-10-01
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/jananiravi/b2ai_survey/blob/609d00d6dbd06b7eab477f82f44a509b8263a37b/docs/figure/onboarding.rmd/geographic-distribution-2.png" target="_blank">609d00d</a>
+</td>
+<td>
+Janani Ravi
+</td>
+<td>
+2025-11-20
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<div id="institutional-diversity-by-dgp" class="section level3">
+<h3>Institutional diversity by DGP</h3>
+<table class="table table-striped table-hover table-condensed" style="width: auto !important; margin-left: auto; margin-right: auto;">
+<caption>
+Institutional diversity by DGP
+</caption>
+<thead>
+<tr>
+<th style="text-align:left;">
+DGP
+</th>
+<th style="text-align:right;">
+Participants
+</th>
+<th style="text-align:right;">
+Institutions
+</th>
+<th style="text-align:right;">
+Inst. types
+</th>
+<th style="text-align:right;">
+States
+</th>
+<th style="text-align:right;">
+Countries
+</th>
+<th style="text-align:right;">
+Participants/Institution
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+AI-READi
+</td>
+<td style="text-align:right;">
+70
+</td>
+<td style="text-align:right;">
+18
+</td>
+<td style="text-align:right;">
+3
+</td>
+<td style="text-align:right;">
+5
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+3.9
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+CHoRUS
+</td>
+<td style="text-align:right;">
+84
+</td>
+<td style="text-align:right;">
+27
+</td>
+<td style="text-align:right;">
+5
+</td>
+<td style="text-align:right;">
+14
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:right;">
+3.1
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+CM4AI
+</td>
+<td style="text-align:right;">
+51
+</td>
+<td style="text-align:right;">
+18
+</td>
+<td style="text-align:right;">
+3
+</td>
+<td style="text-align:right;">
+6
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:right;">
+2.8
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Multiple
+</td>
+<td style="text-align:right;">
+25
+</td>
+<td style="text-align:right;">
+19
+</td>
+<td style="text-align:right;">
+3
+</td>
+<td style="text-align:right;">
+7
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:right;">
+1.3
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Voice
+</td>
+<td style="text-align:right;">
+58
+</td>
+<td style="text-align:right;">
+23
+</td>
+<td style="text-align:right;">
+4
+</td>
+<td style="text-align:right;">
+7
+</td>
+<td style="text-align:right;">
+3
+</td>
+<td style="text-align:right;">
+2.5
+</td>
+</tr>
+</tbody>
+</table>
+<p><img src="figure/onboarding.rmd/inst-diversity-viz-1.png" alt="" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-inst-diversity-viz-1">
+Past versions of inst-diversity-viz-1.png
+</button>
+</p>
+<div id="fig-inst-diversity-viz-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/jananiravi/b2ai_survey/blob/5604aa52b14ac44179d3156683a92185d7851398/docs/figure/onboarding.rmd/inst-diversity-viz-1.png" target="_blank">5604aa5</a>
+</td>
+<td>
+Emily Boyer
+</td>
+<td>
+2026-10-16
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/jananiravi/b2ai_survey/blob/7099f8bd606242f57a1fe7df23e36b9b11a5397f/docs/figure/onboarding.rmd/inst-diversity-viz-1.png" target="_blank">7099f8b</a>
+</td>
+<td>
+Emily Boyer
+</td>
+<td>
+2026-10-02
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/jananiravi/b2ai_survey/blob/66ad9df1d6cc75a1c63a9314a1937ff5f5ddb808/docs/figure/onboarding.rmd/inst-diversity-viz-1.png" target="_blank">66ad9df</a>
+</td>
+<td>
+Emily Boyer
+</td>
+<td>
+2026-10-01
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/jananiravi/b2ai_survey/blob/4ae8e85da5f44a2b2614cc0065fcabd5ea60c6ba/docs/figure/onboarding.rmd/inst-diversity-viz-1.png" target="_blank">4ae8e85</a>
+</td>
+<td>
+Emily Boyer
+</td>
+<td>
+2026-10-01
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/jananiravi/b2ai_survey/blob/609d00d6dbd06b7eab477f82f44a509b8263a37b/docs/figure/onboarding.rmd/inst-diversity-viz-1.png" target="_blank">609d00d</a>
+</td>
+<td>
+Janani Ravi
+</td>
+<td>
+2025-11-20
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</div>
+<div id="expertise-and-disciplinary-backgrounds" class="section level2">
+<h2>Expertise and disciplinary backgrounds</h2>
+<div id="expertise-areas" class="section level3">
+<h3>Expertise areas</h3>
+<table class="table table-striped table-hover table-condensed" style="width: auto !important; margin-left: auto; margin-right: auto;">
+<caption>
+Top 25 expertise areas
+</caption>
+<thead>
+<tr>
+<th style="text-align:left;">
+Expertise area
+</th>
+<th style="text-align:right;">
+Count
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+ML/AI tools and methods
+</td>
+<td style="text-align:right;">
+208
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Ethical AI
+</td>
+<td style="text-align:right;">
+154
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Data Visualization
+</td>
+<td style="text-align:right;">
+144
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Data Integration Technologies
+</td>
+<td style="text-align:right;">
+140
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Jupyter Notebooks
+</td>
+<td style="text-align:right;">
+107
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Biomedical Informatics
+</td>
+<td style="text-align:right;">
+106
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Other Discipline
+</td>
+<td style="text-align:right;">
+106
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Project Management
+</td>
+<td style="text-align:right;">
+100
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Clinical Standards
+</td>
+<td style="text-align:right;">
+98
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Cloud computing expertise
+</td>
+<td style="text-align:right;">
+98
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+R
+</td>
+<td style="text-align:right;">
+96
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Equity in Community Participation
+</td>
+<td style="text-align:right;">
+87
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Public Health
+</td>
+<td style="text-align:right;">
+86
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Deidentification and Security
+</td>
+<td style="text-align:right;">
+74
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Reproducibility
+</td>
+<td style="text-align:right;">
+74
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Terminologies
+</td>
+<td style="text-align:right;">
+69
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Science of Team Science
+</td>
+<td style="text-align:right;">
+68
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Challenges and Evaluation
+</td>
+<td style="text-align:right;">
+66
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Genetics
+</td>
+<td style="text-align:right;">
+64
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Graph Technologies
+</td>
+<td style="text-align:right;">
+58
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Systems Biology
+</td>
+<td style="text-align:right;">
+56
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Communications
+</td>
+<td style="text-align:right;">
+55
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Neuroscience
+</td>
+<td style="text-align:right;">
+55
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Operations
+</td>
+<td style="text-align:right;">
+55
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Governance
+</td>
+<td style="text-align:right;">
+54
+</td>
+</tr>
+</tbody>
+</table>
+<p><img src="figure/onboarding.rmd/expertise-analysis-1.png" alt="" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-expertise-analysis-1">
+Past versions of expertise-analysis-1.png
+</button>
+</p>
+<div id="fig-expertise-analysis-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/jananiravi/b2ai_survey/blob/5604aa52b14ac44179d3156683a92185d7851398/docs/figure/onboarding.rmd/expertise-analysis-1.png" target="_blank">5604aa5</a>
+</td>
+<td>
+Emily Boyer
+</td>
+<td>
+2026-10-16
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/jananiravi/b2ai_survey/blob/1526c4ec579cf87106d4e78351e85101c5f8a4e3/docs/figure/onboarding.rmd/expertise-analysis-1.png" target="_blank">1526c4e</a>
+</td>
+<td>
+Emily Boyer
+</td>
+<td>
+2026-10-07
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/jananiravi/b2ai_survey/blob/7099f8bd606242f57a1fe7df23e36b9b11a5397f/docs/figure/onboarding.rmd/expertise-analysis-1.png" target="_blank">7099f8b</a>
+</td>
+<td>
+Emily Boyer
+</td>
+<td>
+2026-10-02
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/jananiravi/b2ai_survey/blob/66ad9df1d6cc75a1c63a9314a1937ff5f5ddb808/docs/figure/onboarding.rmd/expertise-analysis-1.png" target="_blank">66ad9df</a>
+</td>
+<td>
+Emily Boyer
+</td>
+<td>
+2026-10-01
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/jananiravi/b2ai_survey/blob/4ae8e85da5f44a2b2614cc0065fcabd5ea60c6ba/docs/figure/onboarding.rmd/expertise-analysis-1.png" target="_blank">4ae8e85</a>
+</td>
+<td>
+Emily Boyer
+</td>
+<td>
+2026-10-01
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/jananiravi/b2ai_survey/blob/609d00d6dbd06b7eab477f82f44a509b8263a37b/docs/figure/onboarding.rmd/expertise-analysis-1.png" target="_blank">609d00d</a>
+</td>
+<td>
+Janani Ravi
+</td>
+<td>
+2025-11-20
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<div id="degree-distribution" class="section level3">
+<h3>Degree distribution</h3>
+<table class="table table-striped table-hover table-condensed" style="width: auto !important; margin-left: auto; margin-right: auto;">
+<caption>
+Degree distribution
+</caption>
+<thead>
+<tr>
+<th style="text-align:left;">
+Degree
+</th>
+<th style="text-align:right;">
+Count
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+PhD
+</td>
+<td style="text-align:right;">
+228
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+MS
+</td>
+<td style="text-align:right;">
+79
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+BS
+</td>
+<td style="text-align:right;">
+71
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+MD
+</td>
+<td style="text-align:right;">
+62
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+BA
+</td>
+<td style="text-align:right;">
+32
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+MA
+</td>
+<td style="text-align:right;">
+21
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+MPH
+</td>
+<td style="text-align:right;">
+15
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+MBA
+</td>
+<td style="text-align:right;">
+13
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Other
+</td>
+<td style="text-align:right;">
+10
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+JD
+</td>
+<td style="text-align:right;">
+5
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+BS In Progress
+</td>
+<td style="text-align:right;">
+3
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+MEng
+</td>
+<td style="text-align:right;">
+3
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+PhD Candidate
+</td>
+<td style="text-align:right;">
+3
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+DHA
+</td>
+<td style="text-align:right;">
+2
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+MEd
+</td>
+<td style="text-align:right;">
+2
+</td>
+</tr>
+</tbody>
+</table>
+<p><img src="figure/onboarding.rmd/degree-analysis-1.png" alt="" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-degree-analysis-1">
+Past versions of degree-analysis-1.png
+</button>
+</p>
+<div id="fig-degree-analysis-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/jananiravi/b2ai_survey/blob/5604aa52b14ac44179d3156683a92185d7851398/docs/figure/onboarding.rmd/degree-analysis-1.png" target="_blank">5604aa5</a>
+</td>
+<td>
+Emily Boyer
+</td>
+<td>
+2026-10-16
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/jananiravi/b2ai_survey/blob/7099f8bd606242f57a1fe7df23e36b9b11a5397f/docs/figure/onboarding.rmd/degree-analysis-1.png" target="_blank">7099f8b</a>
+</td>
+<td>
+Emily Boyer
+</td>
+<td>
+2026-10-02
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/jananiravi/b2ai_survey/blob/66ad9df1d6cc75a1c63a9314a1937ff5f5ddb808/docs/figure/onboarding.rmd/degree-analysis-1.png" target="_blank">66ad9df</a>
+</td>
+<td>
+Emily Boyer
+</td>
+<td>
+2026-10-01
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/jananiravi/b2ai_survey/blob/4ae8e85da5f44a2b2614cc0065fcabd5ea60c6ba/docs/figure/onboarding.rmd/degree-analysis-1.png" target="_blank">4ae8e85</a>
+</td>
+<td>
+Emily Boyer
+</td>
+<td>
+2026-10-01
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/jananiravi/b2ai_survey/blob/609d00d6dbd06b7eab477f82f44a509b8263a37b/docs/figure/onboarding.rmd/degree-analysis-1.png" target="_blank">609d00d</a>
+</td>
+<td>
+Janani Ravi
+</td>
+<td>
+2025-11-20
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<div id="expertise-by-career-stage" class="section level3">
+<h3>Expertise by career stage</h3>
+<p><img src="figure/onboarding.rmd/expertise-career-stage-1.png" alt="" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-expertise-career-stage-1">
+Past versions of expertise-career-stage-1.png
+</button>
+</p>
+<div id="fig-expertise-career-stage-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/jananiravi/b2ai_survey/blob/5604aa52b14ac44179d3156683a92185d7851398/docs/figure/onboarding.rmd/expertise-career-stage-1.png" target="_blank">5604aa5</a>
+</td>
+<td>
+Emily Boyer
+</td>
+<td>
+2026-10-16
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/jananiravi/b2ai_survey/blob/1526c4ec579cf87106d4e78351e85101c5f8a4e3/docs/figure/onboarding.rmd/expertise-career-stage-1.png" target="_blank">1526c4e</a>
+</td>
+<td>
+Emily Boyer
+</td>
+<td>
+2026-10-07
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/jananiravi/b2ai_survey/blob/7099f8bd606242f57a1fe7df23e36b9b11a5397f/docs/figure/onboarding.rmd/expertise-career-stage-1.png" target="_blank">7099f8b</a>
+</td>
+<td>
+Emily Boyer
+</td>
+<td>
+2026-10-02
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/jananiravi/b2ai_survey/blob/66ad9df1d6cc75a1c63a9314a1937ff5f5ddb808/docs/figure/onboarding.rmd/expertise-career-stage-1.png" target="_blank">66ad9df</a>
+</td>
+<td>
+Emily Boyer
+</td>
+<td>
+2026-10-01
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/jananiravi/b2ai_survey/blob/4ae8e85da5f44a2b2614cc0065fcabd5ea60c6ba/docs/figure/onboarding.rmd/expertise-career-stage-1.png" target="_blank">4ae8e85</a>
+</td>
+<td>
+Emily Boyer
+</td>
+<td>
+2026-10-01
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/jananiravi/b2ai_survey/blob/609d00d6dbd06b7eab477f82f44a509b8263a37b/docs/figure/onboarding.rmd/expertise-career-stage-1.png" target="_blank">609d00d</a>
+</td>
+<td>
+Janani Ravi
+</td>
+<td>
+2025-11-20
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</div>
+<div id="team-composition-analysis" class="section level2">
+<h2>Team composition analysis</h2>
+<div id="multi-dgp-participation" class="section level3">
+<h3>Multi-DGP participation</h3>
+<table class="table table-striped table-hover table-condensed" style="width: auto !important; margin-left: auto; margin-right: auto;">
+<caption>
+Distribution of DGP participation
+</caption>
+<thead>
+<tr>
+<th style="text-align:right;">
+Number of DGPs
+</th>
+<th style="text-align:right;">
+Participants
+</th>
+<th style="text-align:right;">
+Percent
+</th>
+<th style="text-align:left;">
+Category
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+222
+</td>
+<td style="text-align:right;">
+43.4
+</td>
+<td style="text-align:left;">
+No DGP
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+264
+</td>
+<td style="text-align:right;">
+51.7
+</td>
+<td style="text-align:left;">
+Single DGP
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:right;">
+20
+</td>
+<td style="text-align:right;">
+3.9
+</td>
+<td style="text-align:left;">
+Multiple DGPs
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+4
+</td>
+<td style="text-align:right;">
+5
+</td>
+<td style="text-align:right;">
+1.0
+</td>
+<td style="text-align:left;">
+Multiple DGPs
+</td>
+</tr>
+</tbody>
+</table>
+<p><img src="figure/onboarding.rmd/multi-dgp-1.png" alt="" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-multi-dgp-1">
+Past versions of multi-dgp-1.png
+</button>
+</p>
+<div id="fig-multi-dgp-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/jananiravi/b2ai_survey/blob/5604aa52b14ac44179d3156683a92185d7851398/docs/figure/onboarding.rmd/multi-dgp-1.png" target="_blank">5604aa5</a>
+</td>
+<td>
+Emily Boyer
+</td>
+<td>
+2026-10-16
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/jananiravi/b2ai_survey/blob/7099f8bd606242f57a1fe7df23e36b9b11a5397f/docs/figure/onboarding.rmd/multi-dgp-1.png" target="_blank">7099f8b</a>
+</td>
+<td>
+Emily Boyer
+</td>
+<td>
+2026-10-02
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/jananiravi/b2ai_survey/blob/66ad9df1d6cc75a1c63a9314a1937ff5f5ddb808/docs/figure/onboarding.rmd/multi-dgp-1.png" target="_blank">66ad9df</a>
+</td>
+<td>
+Emily Boyer
+</td>
+<td>
+2026-10-01
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/jananiravi/b2ai_survey/blob/4ae8e85da5f44a2b2614cc0065fcabd5ea60c6ba/docs/figure/onboarding.rmd/multi-dgp-1.png" target="_blank">4ae8e85</a>
+</td>
+<td>
+Emily Boyer
+</td>
+<td>
+2026-10-01
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/jananiravi/b2ai_survey/blob/609d00d6dbd06b7eab477f82f44a509b8263a37b/docs/figure/onboarding.rmd/multi-dgp-1.png" target="_blank">609d00d</a>
+</td>
+<td>
+Janani Ravi
+</td>
+<td>
+2025-11-20
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<div id="cross-core-participation" class="section level3">
+<h3>Cross-core participation</h3>
+<table class="table table-striped table-hover table-condensed" style="width: auto !important; margin-left: auto; margin-right: auto;">
+<caption>
+Distribution of core participation
+</caption>
+<thead>
+<tr>
+<th style="text-align:right;">
+Number of Cores
+</th>
+<th style="text-align:right;">
+Participants
+</th>
+<th style="text-align:right;">
+Percent
+</th>
+<th style="text-align:left;">
+Category
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+329
+</td>
+<td style="text-align:right;">
+64.4
+</td>
+<td style="text-align:left;">
+No Core
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+137
+</td>
+<td style="text-align:right;">
+26.8
+</td>
+<td style="text-align:left;">
+Single Core
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:right;">
+27
+</td>
+<td style="text-align:right;">
+5.3
+</td>
+<td style="text-align:left;">
+Multiple Cores
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+3
+</td>
+<td style="text-align:right;">
+8
+</td>
+<td style="text-align:right;">
+1.6
+</td>
+<td style="text-align:left;">
+Multiple Cores
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+5
+</td>
+<td style="text-align:right;">
+4
+</td>
+<td style="text-align:right;">
+0.8
+</td>
+<td style="text-align:left;">
+Multiple Cores
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+6
+</td>
+<td style="text-align:right;">
+6
+</td>
+<td style="text-align:right;">
+1.2
+</td>
+<td style="text-align:left;">
+Multiple Cores
+</td>
+</tr>
+</tbody>
+</table>
+<p><img src="figure/onboarding.rmd/multi-core-1.png" alt="" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-multi-core-1">
+Past versions of multi-core-1.png
+</button>
+</p>
+<div id="fig-multi-core-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/jananiravi/b2ai_survey/blob/5604aa52b14ac44179d3156683a92185d7851398/docs/figure/onboarding.rmd/multi-core-1.png" target="_blank">5604aa5</a>
+</td>
+<td>
+Emily Boyer
+</td>
+<td>
+2026-10-16
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/jananiravi/b2ai_survey/blob/7099f8bd606242f57a1fe7df23e36b9b11a5397f/docs/figure/onboarding.rmd/multi-core-1.png" target="_blank">7099f8b</a>
+</td>
+<td>
+Emily Boyer
+</td>
+<td>
+2026-10-02
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/jananiravi/b2ai_survey/blob/66ad9df1d6cc75a1c63a9314a1937ff5f5ddb808/docs/figure/onboarding.rmd/multi-core-1.png" target="_blank">66ad9df</a>
+</td>
+<td>
+Emily Boyer
+</td>
+<td>
+2026-10-01
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/jananiravi/b2ai_survey/blob/4ae8e85da5f44a2b2614cc0065fcabd5ea60c6ba/docs/figure/onboarding.rmd/multi-core-1.png" target="_blank">4ae8e85</a>
+</td>
+<td>
+Emily Boyer
+</td>
+<td>
+2026-10-01
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/jananiravi/b2ai_survey/blob/609d00d6dbd06b7eab477f82f44a509b8263a37b/docs/figure/onboarding.rmd/multi-core-1.png" target="_blank">609d00d</a>
+</td>
+<td>
+Janani Ravi
+</td>
+<td>
+2025-11-20
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<div id="dgp-and-core-overlap" class="section level3">
+<h3>DGP and core overlap</h3>
+<table class="table table-striped table-hover table-condensed" style="width: auto !important; margin-left: auto; margin-right: auto;">
+<caption>
+Overlap between DGP and core participation
+</caption>
+<thead>
+<tr>
+<th style="text-align:left;">
+Participation type
+</th>
+<th style="text-align:right;">
+Participants
+</th>
+<th style="text-align:right;">
+Percent
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+Core only
+</td>
+<td style="text-align:right;">
+143
+</td>
+<td style="text-align:right;">
+28.0
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+DGP + Core
+</td>
+<td style="text-align:right;">
+39
+</td>
+<td style="text-align:right;">
+7.6
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+DGP only
+</td>
+<td style="text-align:right;">
+250
+</td>
+<td style="text-align:right;">
+48.9
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Other
+</td>
+<td style="text-align:right;">
+79
+</td>
+<td style="text-align:right;">
+15.5
+</td>
+</tr>
+</tbody>
+</table>
+<p><img src="figure/onboarding.rmd/dgp-core-overlap-1.png" alt="" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-dgp-core-overlap-1">
+Past versions of dgp-core-overlap-1.png
+</button>
+</p>
+<div id="fig-dgp-core-overlap-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/jananiravi/b2ai_survey/blob/5604aa52b14ac44179d3156683a92185d7851398/docs/figure/onboarding.rmd/dgp-core-overlap-1.png" target="_blank">5604aa5</a>
+</td>
+<td>
+Emily Boyer
+</td>
+<td>
+2026-10-16
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/jananiravi/b2ai_survey/blob/7099f8bd606242f57a1fe7df23e36b9b11a5397f/docs/figure/onboarding.rmd/dgp-core-overlap-1.png" target="_blank">7099f8b</a>
+</td>
+<td>
+Emily Boyer
+</td>
+<td>
+2026-10-02
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/jananiravi/b2ai_survey/blob/66ad9df1d6cc75a1c63a9314a1937ff5f5ddb808/docs/figure/onboarding.rmd/dgp-core-overlap-1.png" target="_blank">66ad9df</a>
+</td>
+<td>
+Emily Boyer
+</td>
+<td>
+2026-10-01
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/jananiravi/b2ai_survey/blob/4ae8e85da5f44a2b2614cc0065fcabd5ea60c6ba/docs/figure/onboarding.rmd/dgp-core-overlap-1.png" target="_blank">4ae8e85</a>
+</td>
+<td>
+Emily Boyer
+</td>
+<td>
+2026-10-01
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/jananiravi/b2ai_survey/blob/609d00d6dbd06b7eab477f82f44a509b8263a37b/docs/figure/onboarding.rmd/dgp-core-overlap-1.png" target="_blank">609d00d</a>
+</td>
+<td>
+Janani Ravi
+</td>
+<td>
+2025-11-20
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<div id="career-stage-distribution-by-dgp" class="section level3">
+<h3>Career stage distribution by DGP</h3>
+<table class="table table-striped table-hover table-condensed" style="width: auto !important; margin-left: auto; margin-right: auto;">
+<caption>
+Career stage distribution by DGP
+</caption>
+<thead>
+<tr>
+<th style="text-align:left;">
+primary_dgp
+</th>
+<th style="text-align:right;">
+n_Early
+</th>
+<th style="text-align:right;">
+n_Mid
+</th>
+<th style="text-align:right;">
+n_Senior
+</th>
+<th style="text-align:right;">
+percent_Early
+</th>
+<th style="text-align:right;">
+percent_Mid
+</th>
+<th style="text-align:right;">
+percent_Senior
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+AI-READi
+</td>
+<td style="text-align:right;">
+23
+</td>
+<td style="text-align:right;">
+28
+</td>
+<td style="text-align:right;">
+15
+</td>
+<td style="text-align:right;">
+34.8
+</td>
+<td style="text-align:right;">
+42.4
+</td>
+<td style="text-align:right;">
+22.7
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+CHoRUS
+</td>
+<td style="text-align:right;">
+25
+</td>
+<td style="text-align:right;">
+41
+</td>
+<td style="text-align:right;">
+18
+</td>
+<td style="text-align:right;">
+29.8
+</td>
+<td style="text-align:right;">
+48.8
+</td>
+<td style="text-align:right;">
+21.4
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+CM4AI
+</td>
+<td style="text-align:right;">
+21
+</td>
+<td style="text-align:right;">
+19
+</td>
+<td style="text-align:right;">
+10
+</td>
+<td style="text-align:right;">
+42.0
+</td>
+<td style="text-align:right;">
+38.0
+</td>
+<td style="text-align:right;">
+20.0
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Multiple
+</td>
+<td style="text-align:right;">
+5
+</td>
+<td style="text-align:right;">
+14
+</td>
+<td style="text-align:right;">
+6
+</td>
+<td style="text-align:right;">
+20.0
+</td>
+<td style="text-align:right;">
+56.0
+</td>
+<td style="text-align:right;">
+24.0
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Voice
+</td>
+<td style="text-align:right;">
+25
+</td>
+<td style="text-align:right;">
+27
+</td>
+<td style="text-align:right;">
+6
+</td>
+<td style="text-align:right;">
+43.1
+</td>
+<td style="text-align:right;">
+46.6
+</td>
+<td style="text-align:right;">
+10.3
+</td>
+</tr>
+</tbody>
+</table>
+<p><img src="figure/onboarding.rmd/career-stage-dgp-1.png" alt="" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-career-stage-dgp-1">
+Past versions of career-stage-dgp-1.png
+</button>
+</p>
+<div id="fig-career-stage-dgp-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/jananiravi/b2ai_survey/blob/5604aa52b14ac44179d3156683a92185d7851398/docs/figure/onboarding.rmd/career-stage-dgp-1.png" target="_blank">5604aa5</a>
+</td>
+<td>
+Emily Boyer
+</td>
+<td>
+2026-10-16
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/jananiravi/b2ai_survey/blob/7099f8bd606242f57a1fe7df23e36b9b11a5397f/docs/figure/onboarding.rmd/career-stage-dgp-1.png" target="_blank">7099f8b</a>
+</td>
+<td>
+Emily Boyer
+</td>
+<td>
+2026-10-02
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/jananiravi/b2ai_survey/blob/66ad9df1d6cc75a1c63a9314a1937ff5f5ddb808/docs/figure/onboarding.rmd/career-stage-dgp-1.png" target="_blank">66ad9df</a>
+</td>
+<td>
+Emily Boyer
+</td>
+<td>
+2026-10-01
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/jananiravi/b2ai_survey/blob/4ae8e85da5f44a2b2614cc0065fcabd5ea60c6ba/docs/figure/onboarding.rmd/career-stage-dgp-1.png" target="_blank">4ae8e85</a>
+</td>
+<td>
+Emily Boyer
+</td>
+<td>
+2026-10-01
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/jananiravi/b2ai_survey/blob/609d00d6dbd06b7eab477f82f44a509b8263a37b/docs/figure/onboarding.rmd/career-stage-dgp-1.png" target="_blank">609d00d</a>
+</td>
+<td>
+Janani Ravi
+</td>
+<td>
+2025-11-20
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<div id="senior-key-personnel-and-trainees-by-dgp" class="section level3">
+<h3>Senior key personnel and trainees by DGP</h3>
+<table class="table table-striped table-hover table-condensed" style="width: auto !important; margin-left: auto; margin-right: auto;">
+<caption>
+Senior key personnel and trainees by DGP
+</caption>
+<thead>
+<tr>
+<th style="text-align:left;">
+DGP
+</th>
+<th style="text-align:right;">
+Total
+</th>
+<th style="text-align:right;">
+Sr. Key
+</th>
+<th style="text-align:right;">
+Sr. Key %
+</th>
+<th style="text-align:right;">
+Trainees
+</th>
+<th style="text-align:right;">
+Trainee %
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+AI-READi
+</td>
+<td style="text-align:right;">
+70
+</td>
+<td style="text-align:right;">
+17
+</td>
+<td style="text-align:right;">
+24.3
+</td>
+<td style="text-align:right;">
+18
+</td>
+<td style="text-align:right;">
+25.7
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+CHoRUS
+</td>
+<td style="text-align:right;">
+84
+</td>
+<td style="text-align:right;">
+19
+</td>
+<td style="text-align:right;">
+22.6
+</td>
+<td style="text-align:right;">
+17
+</td>
+<td style="text-align:right;">
+20.2
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+CM4AI
+</td>
+<td style="text-align:right;">
+51
+</td>
+<td style="text-align:right;">
+11
+</td>
+<td style="text-align:right;">
+21.6
+</td>
+<td style="text-align:right;">
+18
+</td>
+<td style="text-align:right;">
+35.3
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Multiple
+</td>
+<td style="text-align:right;">
+25
+</td>
+<td style="text-align:right;">
+7
+</td>
+<td style="text-align:right;">
+28.0
+</td>
+<td style="text-align:right;">
+4
+</td>
+<td style="text-align:right;">
+16.0
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Voice
+</td>
+<td style="text-align:right;">
+59
+</td>
+<td style="text-align:right;">
+7
+</td>
+<td style="text-align:right;">
+11.9
+</td>
+<td style="text-align:right;">
+22
+</td>
+<td style="text-align:right;">
+37.3
+</td>
+</tr>
+</tbody>
+</table>
+<p><img src="figure/onboarding.rmd/sr-key-trainee-dgp-1.png" alt="" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-sr-key-trainee-dgp-1">
+Past versions of sr-key-trainee-dgp-1.png
+</button>
+</p>
+<div id="fig-sr-key-trainee-dgp-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/jananiravi/b2ai_survey/blob/5604aa52b14ac44179d3156683a92185d7851398/docs/figure/onboarding.rmd/sr-key-trainee-dgp-1.png" target="_blank">5604aa5</a>
+</td>
+<td>
+Emily Boyer
+</td>
+<td>
+2026-10-16
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/jananiravi/b2ai_survey/blob/7099f8bd606242f57a1fe7df23e36b9b11a5397f/docs/figure/onboarding.rmd/sr-key-trainee-dgp-1.png" target="_blank">7099f8b</a>
+</td>
+<td>
+Emily Boyer
+</td>
+<td>
+2026-10-02
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/jananiravi/b2ai_survey/blob/66ad9df1d6cc75a1c63a9314a1937ff5f5ddb808/docs/figure/onboarding.rmd/sr-key-trainee-dgp-1.png" target="_blank">66ad9df</a>
+</td>
+<td>
+Emily Boyer
+</td>
+<td>
+2026-10-01
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/jananiravi/b2ai_survey/blob/4ae8e85da5f44a2b2614cc0065fcabd5ea60c6ba/docs/figure/onboarding.rmd/sr-key-trainee-dgp-1.png" target="_blank">4ae8e85</a>
+</td>
+<td>
+Emily Boyer
+</td>
+<td>
+2026-10-01
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/jananiravi/b2ai_survey/blob/609d00d6dbd06b7eab477f82f44a509b8263a37b/docs/figure/onboarding.rmd/sr-key-trainee-dgp-1.png" target="_blank">609d00d</a>
+</td>
+<td>
+Janani Ravi
+</td>
+<td>
+2025-11-20
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</div>
+<div id="expertise-diversity-within-teams" class="section level2">
+<h2>Expertise diversity within teams</h2>
+<div id="expertise-diversity-by-dgp" class="section level3">
+<h3>Expertise diversity by DGP</h3>
+<table class="table table-striped table-hover table-condensed" style="width: auto !important; margin-left: auto; margin-right: auto;">
+<caption>
+Expertise diversity by DGP
+</caption>
+<thead>
+<tr>
+<th style="text-align:left;">
+DGP
+</th>
+<th style="text-align:right;">
+Members
+</th>
+<th style="text-align:right;">
+Unique expertise areas
+</th>
+<th style="text-align:right;">
+Total expertise tags
+</th>
+<th style="text-align:right;">
+Expertise/member
+</th>
+<th style="text-align:right;">
+Diversity score
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+Multiple
+</td>
+<td style="text-align:right;">
+25
+</td>
+<td style="text-align:right;">
+47
+</td>
+<td style="text-align:right;">
+219
+</td>
+<td style="text-align:right;">
+8.76
+</td>
+<td style="text-align:right;">
+1.88
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+CM4AI
+</td>
+<td style="text-align:right;">
+51
+</td>
+<td style="text-align:right;">
+47
+</td>
+<td style="text-align:right;">
+293
+</td>
+<td style="text-align:right;">
+5.75
+</td>
+<td style="text-align:right;">
+0.92
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Voice
+</td>
+<td style="text-align:right;">
+59
+</td>
+<td style="text-align:right;">
+47
+</td>
+<td style="text-align:right;">
+320
+</td>
+<td style="text-align:right;">
+5.42
+</td>
+<td style="text-align:right;">
+0.80
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+AI-READi
+</td>
+<td style="text-align:right;">
+70
+</td>
+<td style="text-align:right;">
+45
+</td>
+<td style="text-align:right;">
+401
+</td>
+<td style="text-align:right;">
+5.73
+</td>
+<td style="text-align:right;">
+0.64
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+CHoRUS
+</td>
+<td style="text-align:right;">
+84
+</td>
+<td style="text-align:right;">
+47
+</td>
+<td style="text-align:right;">
+520
+</td>
+<td style="text-align:right;">
+6.19
+</td>
+<td style="text-align:right;">
+0.56
+</td>
+</tr>
+</tbody>
+</table>
+<p><img src="figure/onboarding.rmd/expertise-diversity-viz-1.png" alt="" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-expertise-diversity-viz-1">
+Past versions of expertise-diversity-viz-1.png
+</button>
+</p>
+<div id="fig-expertise-diversity-viz-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/jananiravi/b2ai_survey/blob/5604aa52b14ac44179d3156683a92185d7851398/docs/figure/onboarding.rmd/expertise-diversity-viz-1.png" target="_blank">5604aa5</a>
+</td>
+<td>
+Emily Boyer
+</td>
+<td>
+2026-10-16
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/jananiravi/b2ai_survey/blob/1526c4ec579cf87106d4e78351e85101c5f8a4e3/docs/figure/onboarding.rmd/expertise-diversity-viz-1.png" target="_blank">1526c4e</a>
+</td>
+<td>
+Emily Boyer
+</td>
+<td>
+2026-10-07
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/jananiravi/b2ai_survey/blob/7099f8bd606242f57a1fe7df23e36b9b11a5397f/docs/figure/onboarding.rmd/expertise-diversity-viz-1.png" target="_blank">7099f8b</a>
+</td>
+<td>
+Emily Boyer
+</td>
+<td>
+2026-10-02
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/jananiravi/b2ai_survey/blob/66ad9df1d6cc75a1c63a9314a1937ff5f5ddb808/docs/figure/onboarding.rmd/expertise-diversity-viz-1.png" target="_blank">66ad9df</a>
+</td>
+<td>
+Emily Boyer
+</td>
+<td>
+2026-10-01
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/jananiravi/b2ai_survey/blob/4ae8e85da5f44a2b2614cc0065fcabd5ea60c6ba/docs/figure/onboarding.rmd/expertise-diversity-viz-1.png" target="_blank">4ae8e85</a>
+</td>
+<td>
+Emily Boyer
+</td>
+<td>
+2026-10-01
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/jananiravi/b2ai_survey/blob/609d00d6dbd06b7eab477f82f44a509b8263a37b/docs/figure/onboarding.rmd/expertise-diversity-viz-1.png" target="_blank">609d00d</a>
+</td>
+<td>
+Janani Ravi
+</td>
+<td>
+2025-11-20
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<div id="shared-expertise-across-dgps" class="section level3">
+<h3>Shared expertise across DGPs</h3>
+<table class="table table-striped table-hover table-condensed" style="width: auto !important; margin-left: auto; margin-right: auto;">
+<caption>
+Top 25 expertise areas shared across multiple DGPs
+</caption>
+<thead>
+<tr>
+<th style="text-align:left;">
+Expertise area
+</th>
+<th style="text-align:right;">
+Number of DGPs
+</th>
+<th style="text-align:right;">
+Members
+</th>
+<th style="text-align:left;">
+DGPs
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+ML/AI tools and methods
+</td>
+<td style="text-align:right;">
+5
+</td>
+<td style="text-align:right;">
+125
+</td>
+<td style="text-align:left;">
+AI-READi, CHoRUS, CM4AI, Multiple, Voice
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Data Integration Technologies
+</td>
+<td style="text-align:right;">
+5
+</td>
+<td style="text-align:right;">
+91
+</td>
+<td style="text-align:left;">
+AI-READi, CHoRUS, CM4AI, Multiple, Voice
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Data Visualization
+</td>
+<td style="text-align:right;">
+5
+</td>
+<td style="text-align:right;">
+89
+</td>
+<td style="text-align:left;">
+AI-READi, CHoRUS, CM4AI, Multiple, Voice
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Ethical AI
+</td>
+<td style="text-align:right;">
+5
+</td>
+<td style="text-align:right;">
+88
+</td>
+<td style="text-align:left;">
+AI-READi, CHoRUS, CM4AI, Multiple, Voice
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Other Discipline
+</td>
+<td style="text-align:right;">
+5
+</td>
+<td style="text-align:right;">
+73
+</td>
+<td style="text-align:left;">
+AI-READi, CHoRUS, CM4AI, Multiple, Voice
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Biomedical Informatics
+</td>
+<td style="text-align:right;">
+5
+</td>
+<td style="text-align:right;">
+70
+</td>
+<td style="text-align:left;">
+AI-READi, CHoRUS, CM4AI, Multiple, Voice
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Jupyter Notebooks
+</td>
+<td style="text-align:right;">
+5
+</td>
+<td style="text-align:right;">
+69
+</td>
+<td style="text-align:left;">
+AI-READi, CHoRUS, CM4AI, Multiple, Voice
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Clinical Standards
+</td>
+<td style="text-align:right;">
+5
+</td>
+<td style="text-align:right;">
+66
+</td>
+<td style="text-align:left;">
+AI-READi, CHoRUS, CM4AI, Multiple, Voice
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Cloud computing expertise
+</td>
+<td style="text-align:right;">
+5
+</td>
+<td style="text-align:right;">
+60
+</td>
+<td style="text-align:left;">
+AI-READi, CHoRUS, CM4AI, Multiple, Voice
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+R
+</td>
+<td style="text-align:right;">
+5
+</td>
+<td style="text-align:right;">
+56
+</td>
+<td style="text-align:left;">
+AI-READi, CHoRUS, CM4AI, Multiple, Voice
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Project Management
+</td>
+<td style="text-align:right;">
+5
+</td>
+<td style="text-align:right;">
+54
+</td>
+<td style="text-align:left;">
+AI-READi, CHoRUS, CM4AI, Multiple, Voice
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Deidentification and Security
+</td>
+<td style="text-align:right;">
+5
+</td>
+<td style="text-align:right;">
+47
+</td>
+<td style="text-align:left;">
+AI-READi, CHoRUS, CM4AI, Multiple, Voice
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Public Health
+</td>
+<td style="text-align:right;">
+5
+</td>
+<td style="text-align:right;">
+47
+</td>
+<td style="text-align:left;">
+AI-READi, CHoRUS, CM4AI, Multiple, Voice
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Reproducibility
+</td>
+<td style="text-align:right;">
+5
+</td>
+<td style="text-align:right;">
+47
+</td>
+<td style="text-align:left;">
+AI-READi, CHoRUS, CM4AI, Multiple, Voice
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Equity in Community Participation
+</td>
+<td style="text-align:right;">
+5
+</td>
+<td style="text-align:right;">
+46
+</td>
+<td style="text-align:left;">
+AI-READi, CHoRUS, CM4AI, Multiple, Voice
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Neuroscience
+</td>
+<td style="text-align:right;">
+5
+</td>
+<td style="text-align:right;">
+45
+</td>
+<td style="text-align:left;">
+AI-READi, CHoRUS, CM4AI, Multiple, Voice
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Other tools
+</td>
+<td style="text-align:right;">
+5
+</td>
+<td style="text-align:right;">
+42
+</td>
+<td style="text-align:left;">
+AI-READi, CHoRUS, CM4AI, Multiple, Voice
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Science of Team Science
+</td>
+<td style="text-align:right;">
+5
+</td>
+<td style="text-align:right;">
+39
+</td>
+<td style="text-align:left;">
+AI-READi, CHoRUS, CM4AI, Multiple, Voice
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Genetics
+</td>
+<td style="text-align:right;">
+5
+</td>
+<td style="text-align:right;">
+35
+</td>
+<td style="text-align:left;">
+AI-READi, CHoRUS, CM4AI, Multiple, Voice
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Terminologies
+</td>
+<td style="text-align:right;">
+5
+</td>
+<td style="text-align:right;">
+35
+</td>
+<td style="text-align:left;">
+AI-READi, CHoRUS, CM4AI, Multiple, Voice
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Social Sciences
+</td>
+<td style="text-align:right;">
+5
+</td>
+<td style="text-align:right;">
+34
+</td>
+<td style="text-align:left;">
+AI-READi, CHoRUS, CM4AI, Multiple, Voice
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Graph Technologies
+</td>
+<td style="text-align:right;">
+5
+</td>
+<td style="text-align:right;">
+29
+</td>
+<td style="text-align:left;">
+AI-READi, CHoRUS, CM4AI, Multiple, Voice
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Other Ethics
+</td>
+<td style="text-align:right;">
+5
+</td>
+<td style="text-align:right;">
+29
+</td>
+<td style="text-align:left;">
+AI-READi, CHoRUS, CM4AI, Multiple, Voice
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Challenges and Evaluation
+</td>
+<td style="text-align:right;">
+5
+</td>
+<td style="text-align:right;">
+28
+</td>
+<td style="text-align:left;">
+AI-READi, CHoRUS, CM4AI, Multiple, Voice
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Systems Biology
+</td>
+<td style="text-align:right;">
+5
+</td>
+<td style="text-align:right;">
+28
+</td>
+<td style="text-align:left;">
+AI-READi, CHoRUS, CM4AI, Multiple, Voice
+</td>
+</tr>
+</tbody>
+</table>
+<p><img src="figure/onboarding.rmd/shared-expertise-viz-1.png" alt="" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-shared-expertise-viz-1">
+Past versions of shared-expertise-viz-1.png
+</button>
+</p>
+<div id="fig-shared-expertise-viz-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/jananiravi/b2ai_survey/blob/5604aa52b14ac44179d3156683a92185d7851398/docs/figure/onboarding.rmd/shared-expertise-viz-1.png" target="_blank">5604aa5</a>
+</td>
+<td>
+Emily Boyer
+</td>
+<td>
+2026-10-16
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/jananiravi/b2ai_survey/blob/1526c4ec579cf87106d4e78351e85101c5f8a4e3/docs/figure/onboarding.rmd/shared-expertise-viz-1.png" target="_blank">1526c4e</a>
+</td>
+<td>
+Emily Boyer
+</td>
+<td>
+2026-10-07
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/jananiravi/b2ai_survey/blob/7099f8bd606242f57a1fe7df23e36b9b11a5397f/docs/figure/onboarding.rmd/shared-expertise-viz-1.png" target="_blank">7099f8b</a>
+</td>
+<td>
+Emily Boyer
+</td>
+<td>
+2026-10-02
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/jananiravi/b2ai_survey/blob/66ad9df1d6cc75a1c63a9314a1937ff5f5ddb808/docs/figure/onboarding.rmd/shared-expertise-viz-1.png" target="_blank">66ad9df</a>
+</td>
+<td>
+Emily Boyer
+</td>
+<td>
+2026-10-01
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/jananiravi/b2ai_survey/blob/4ae8e85da5f44a2b2614cc0065fcabd5ea60c6ba/docs/figure/onboarding.rmd/shared-expertise-viz-1.png" target="_blank">4ae8e85</a>
+</td>
+<td>
+Emily Boyer
+</td>
+<td>
+2026-10-01
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/jananiravi/b2ai_survey/blob/609d00d6dbd06b7eab477f82f44a509b8263a37b/docs/figure/onboarding.rmd/shared-expertise-viz-1.png" target="_blank">609d00d</a>
+</td>
+<td>
+Janani Ravi
+</td>
+<td>
+2025-11-20
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</div>
+<div id="collaboration-potential-metrics" class="section level2">
+<h2>Collaboration potential metrics</h2>
+<div id="cross-institutional-collaboration-potential" class="section level3">
+<h3>Cross-institutional collaboration potential</h3>
+<table class="table table-striped table-hover table-condensed" style="width: auto !important; margin-left: auto; margin-right: auto;">
+<caption>
+Cross-institutional collaboration potential by DGP
+</caption>
+<thead>
+<tr>
+<th style="text-align:left;">
+DGP
+</th>
+<th style="text-align:right;">
+Participants
+</th>
+<th style="text-align:right;">
+Institutions
+</th>
+<th style="text-align:right;">
+Inst. types
+</th>
+<th style="text-align:right;">
+Possible pairs
+</th>
+<th style="text-align:right;">
+Avg. per inst.
+</th>
+<th style="text-align:right;">
+Distribution index
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+AI-READi
+</td>
+<td style="text-align:right;">
+70
+</td>
+<td style="text-align:right;">
+18
+</td>
+<td style="text-align:right;">
+3
+</td>
+<td style="text-align:right;">
+2,415
+</td>
+<td style="text-align:right;">
+3.89
+</td>
+<td style="text-align:right;">
+0.26
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+CHoRUS
+</td>
+<td style="text-align:right;">
+84
+</td>
+<td style="text-align:right;">
+27
+</td>
+<td style="text-align:right;">
+5
+</td>
+<td style="text-align:right;">
+3,486
+</td>
+<td style="text-align:right;">
+3.11
+</td>
+<td style="text-align:right;">
+0.32
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+CM4AI
+</td>
+<td style="text-align:right;">
+51
+</td>
+<td style="text-align:right;">
+18
+</td>
+<td style="text-align:right;">
+3
+</td>
+<td style="text-align:right;">
+1,275
+</td>
+<td style="text-align:right;">
+2.83
+</td>
+<td style="text-align:right;">
+0.35
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Multiple
+</td>
+<td style="text-align:right;">
+25
+</td>
+<td style="text-align:right;">
+19
+</td>
+<td style="text-align:right;">
+3
+</td>
+<td style="text-align:right;">
+300
+</td>
+<td style="text-align:right;">
+1.32
+</td>
+<td style="text-align:right;">
+0.76
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Voice
+</td>
+<td style="text-align:right;">
+58
+</td>
+<td style="text-align:right;">
+23
+</td>
+<td style="text-align:right;">
+4
+</td>
+<td style="text-align:right;">
+1,653
+</td>
+<td style="text-align:right;">
+2.52
+</td>
+<td style="text-align:right;">
+0.40
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="cross-dgp-collaboration-potential" class="section level3">
+<h3>Cross-DGP collaboration potential</h3>
+<table class="table table-striped table-hover table-condensed" style="width: auto !important; margin-left: auto; margin-right: auto;">
+<caption>
+Cross-DGP participation patterns (bridging potential)
+</caption>
+<thead>
+<tr>
+<th style="text-align:left;">
+DGP combination
+</th>
+<th style="text-align:right;">
+Number of participants
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+All 4 DGPs
+</td>
+<td style="text-align:right;">
+5
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Voice + AI-READi
+</td>
+<td style="text-align:right;">
+5
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Voice + CM4AI
+</td>
+<td style="text-align:right;">
+5
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+AI-READi + CHoRUS
+</td>
+<td style="text-align:right;">
+3
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+AI-READi + CM4AI
+</td>
+<td style="text-align:right;">
+3
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+CHoRUS + CM4AI
+</td>
+<td style="text-align:right;">
+3
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Voice + CHoRUS
+</td>
+<td style="text-align:right;">
+1
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="interdisciplinary-collaboration-index" class="section level3">
+<h3>Interdisciplinary collaboration index</h3>
+<table class="table table-striped table-hover table-condensed" style="width: auto !important; margin-left: auto; margin-right: auto;">
+<caption>
+Interdisciplinary collaboration index by DGP
+</caption>
+<thead>
+<tr>
+<th style="text-align:left;">
+DGP
+</th>
+<th style="text-align:right;">
+Participants
+</th>
+<th style="text-align:right;">
+Inst. types
+</th>
+<th style="text-align:right;">
+Diversity index
+</th>
+<th style="text-align:right;">
+Sector balance
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+AI-READi
+</td>
+<td style="text-align:right;">
+67
+</td>
+<td style="text-align:right;">
+3
+</td>
+<td style="text-align:right;">
+0.6
+</td>
+<td style="text-align:right;">
+0.15
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+CHoRUS
+</td>
+<td style="text-align:right;">
+81
+</td>
+<td style="text-align:right;">
+5
+</td>
+<td style="text-align:right;">
+1.0
+</td>
+<td style="text-align:right;">
+0.72
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+CM4AI
+</td>
+<td style="text-align:right;">
+48
+</td>
+<td style="text-align:right;">
+3
+</td>
+<td style="text-align:right;">
+0.6
+</td>
+<td style="text-align:right;">
+0.17
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Multiple
+</td>
+<td style="text-align:right;">
+23
+</td>
+<td style="text-align:right;">
+3
+</td>
+<td style="text-align:right;">
+0.6
+</td>
+<td style="text-align:right;">
+0.61
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Voice
+</td>
+<td style="text-align:right;">
+51
+</td>
+<td style="text-align:right;">
+4
+</td>
+<td style="text-align:right;">
+0.8
+</td>
+<td style="text-align:right;">
+0.67
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div id="data-quality-and-completeness-assessment" class="section level2">
+<h2>Data quality and completeness assessment</h2>
+<div id="response-completion-rates" class="section level3">
+<h3>Response completion rates</h3>
+<table class="table table-striped table-hover table-condensed" style="width: auto !important; margin-left: auto; margin-right: auto;">
+<caption>
+Data completeness by field
+</caption>
+<thead>
+<tr>
+<th style="text-align:left;">
+Field
+</th>
+<th style="text-align:right;">
+Completion rate (%)
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+Primary affiliation
+</td>
+<td style="text-align:right;">
+94.9
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+ORCID
+</td>
+<td style="text-align:right;">
+94.9
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Expertise
+</td>
+<td style="text-align:right;">
+94.3
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Degrees
+</td>
+<td style="text-align:right;">
+92.8
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Department
+</td>
+<td style="text-align:right;">
+64.2
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Bio/profile link
+</td>
+<td style="text-align:right;">
+44.8
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+GitHub handle
+</td>
+<td style="text-align:right;">
+30.1
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Country
+</td>
+<td style="text-align:right;">
+25.6
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+State
+</td>
+<td style="text-align:right;">
+22.1
+</td>
+</tr>
+</tbody>
+</table>
+<p><img src="figure/onboarding.rmd/completion-rates-1.png" alt="" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-completion-rates-1">
+Past versions of completion-rates-1.png
+</button>
+</p>
+<div id="fig-completion-rates-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/jananiravi/b2ai_survey/blob/5604aa52b14ac44179d3156683a92185d7851398/docs/figure/onboarding.rmd/completion-rates-1.png" target="_blank">5604aa5</a>
+</td>
+<td>
+Emily Boyer
+</td>
+<td>
+2026-10-16
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/jananiravi/b2ai_survey/blob/7099f8bd606242f57a1fe7df23e36b9b11a5397f/docs/figure/onboarding.rmd/completion-rates-1.png" target="_blank">7099f8b</a>
+</td>
+<td>
+Emily Boyer
+</td>
+<td>
+2026-10-02
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/jananiravi/b2ai_survey/blob/66ad9df1d6cc75a1c63a9314a1937ff5f5ddb808/docs/figure/onboarding.rmd/completion-rates-1.png" target="_blank">66ad9df</a>
+</td>
+<td>
+Emily Boyer
+</td>
+<td>
+2026-10-01
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/jananiravi/b2ai_survey/blob/4ae8e85da5f44a2b2614cc0065fcabd5ea60c6ba/docs/figure/onboarding.rmd/completion-rates-1.png" target="_blank">4ae8e85</a>
+</td>
+<td>
+Emily Boyer
+</td>
+<td>
+2026-10-01
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/jananiravi/b2ai_survey/blob/609d00d6dbd06b7eab477f82f44a509b8263a37b/docs/figure/onboarding.rmd/completion-rates-1.png" target="_blank">609d00d</a>
+</td>
+<td>
+Janani Ravi
+</td>
+<td>
+2025-11-20
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</div>
+<div id="summary-and-key-findings" class="section level2">
+<h2>Summary and key findings</h2>
+<div id="consortium-overview-metrics" class="section level3">
+<h3>Consortium overview metrics</h3>
+<table class="table table-striped table-hover table-condensed" style="width: auto !important; margin-left: auto; margin-right: auto;">
+<caption>
+B2AI consortium key metrics summary
+</caption>
+<thead>
+<tr>
+<th style="text-align:left;">
+Metric
+</th>
+<th style="text-align:left;">
+Value
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+Total participants onboarded
+</td>
+<td style="text-align:left;">
+511
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Unique institutions represented
+</td>
+<td style="text-align:left;">
+84
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Institution types represented
+</td>
+<td style="text-align:left;">
+5
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Countries represented
+</td>
+<td style="text-align:left;">
+5
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+US states represented
+</td>
+<td style="text-align:left;">
+23
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Data generation projects (DGPs)
+</td>
+<td style="text-align:left;">
+4 (Voice, AI-READi, CHoRUS, CM4AI)
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Core teams
+</td>
+<td style="text-align:left;">
+6 (Admin, Ethics, Teaming, Standards, Tools, SWD)
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Senior key personnel
+</td>
+<td style="text-align:left;">
+85
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Trainees (all types)
+</td>
+<td style="text-align:left;">
+100
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Multi-DGP participants
+</td>
+<td style="text-align:left;">
+25
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Multi-core participants
+</td>
+<td style="text-align:left;">
+45
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Unique expertise areas reported
+</td>
+<td style="text-align:left;">
+50
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Average expertise tags per person
+</td>
+<td style="text-align:left;">
+6.30
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Date range of onboarding
+</td>
+<td style="text-align:left;">
+2022-06-04 to 2025-08-08
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="key-observations" class="section level3">
+<h3>Key observations</h3>
+<p><strong>Temporal patterns:</strong></p>
+<ul>
+<li>The consortium shows distinct growth phases, with peak onboarding during specific months</li>
+<li>DGPs show different onboarding timelines, likely reflecting project initiation dates</li>
+<li>Career stage composition has evolved over time</li>
+</ul>
+<p><strong>Institutional diversity:</strong></p>
+<ul>
+<li>Strong representation from academia, with significant government and non-profit participation</li>
+<li>Top institutions contribute multiple members, but distribution is relatively broad</li>
+<li>Cross-institutional collaboration potential is high within each DGP</li>
+</ul>
+<p><strong>Team composition:</strong></p>
+<ul>
+<li>Balanced representation of career stages, from trainees to senior investigators</li>
+<li>Substantial cross-DGP and cross-core participation, facilitating knowledge transfer</li>
+<li>Institution type diversity enables academic-government-industry partnerships</li>
+</ul>
+<p><strong>Expertise landscape:</strong></p>
+<ul>
+<li>Broad range of expertise areas covering data science, biomedical research, ethics, and standards</li>
+<li>Shared expertise across DGPs creates natural collaboration bridges</li>
+<li>Interdisciplinary teams with complementary skills</li>
+</ul>
+</div>
+</div>
+<div id="discussion-and-future-analyses" class="section level2">
+<h2>Discussion and future analyses</h2>
+<div id="data-sufficiency-for-team-composition-analysis" class="section level3">
+<h3>Data sufficiency for team composition analysis</h3>
+<p>The current dataset provides:</p>
+<p><strong>Sufficient data for:</strong></p>
+<ul>
+<li>✓ Institutional diversity analysis</li>
+<li>✓ Geographic distribution assessment<br />
+</li>
+<li>✓ Temporal evolution of team size and composition</li>
+<li>✓ Basic career stage classification (from trainee, srKey, and degrees)</li>
+<li>✓ Role distribution (senior key vs. trainees vs. other)</li>
+<li>✓ Expertise area representation</li>
+<li>✓ Cross-DGP and cross-core collaboration potential</li>
+<li>✓ Institution type distribution (academia, government, industry, etc.)</li>
+</ul>
+<p><strong>Limited data for:</strong></p>
+<ul>
+<li>⚠ Precise career stage classification (would benefit from academic rank, years since degree)</li>
+<li>⚠ Actual collaboration patterns vs. potential (would need network data, co-authorship)</li>
+<li>⚠ Team effectiveness outcomes (would need performance metrics, deliverables)</li>
+<li>⚠ Publication-based success metrics (not in onboarding data)</li>
+<li>⚠ Longitudinal engagement tracking (only onboarding, no off-boarding data)</li>
+</ul>
+</div>
+<div id="recommended-additional-data-for-success-metrics" class="section level3">
+<h3>Recommended additional data for success metrics</h3>
+<p>To evaluate “successful collaborations” and refine team composition analyses:</p>
+<ol style="list-style-type: decimal">
+<li><strong>Collaboration network data:</strong> (w/ Sean, Jake)
+<ul>
+<li>Co-authorship on publications</li>
+<li>Shared datasets or tools developed</li>
+<li>Joint grant submissions</li>
+<li>Cross-DGP working group participation</li>
+</ul></li>
+<li><strong>Productivity metrics:</strong>
+<ul>
+<li>Publications per team/DGP</li>
+<li>Datasets generated and released</li>
+<li>Software tools developed</li>
+<li>Standards proposed/adopted</li>
+</ul></li>
+<li><strong>Career tracking:</strong>
+<ul>
+<li>Academic rank (for faculty)</li>
+<li>Years since terminal degree</li>
+<li>Current vs. starting career stage</li>
+<li>Career advancement during/after B2AI</li>
+</ul></li>
+<li><strong>Engagement indicators:</strong>
+<ul>
+<li>Meeting attendance patterns</li>
+<li>Contribution frequency (commits, documents, etc.)</li>
+<li>Leadership roles taken over time</li>
+<li>Mentor-mentee relationships</li>
+</ul></li>
+<li><strong>Team dynamics:</strong>
+<ul>
+<li>Team satisfaction surveys (like those by Goldie’s evaluation team)</li>
+<li>Perceived collaboration quality</li>
+<li>Communication effectiveness ratings</li>
+<li>Conflict resolution success</li>
+</ul></li>
+<li><strong>Impact metrics:</strong>
+<ul>
+<li>Citation counts for B2AI-related publications</li>
+<li>Dataset reuse by external researchers</li>
+<li>Tool adoption rates</li>
+<li>Standards implementation</li>
+</ul></li>
+</ol>
+</div>
+</div>
+<div id="technical-notes" class="section level2">
+<h2>Technical notes</h2>
+<div id="data-sources-and-methods" class="section level3">
+<h3>Data sources and methods</h3>
+<p><strong>Primary data:</strong> anonymized B2AI onboarding data combining the Nov 2025 onboarding form and the Sept 2026 roster (file: <code>B2AI_onboarding_combined_anonymized.csv</code>)</p>
+<p><strong>Column usage:</strong> - Career stage inferred from: <code>trainee</code>, <code>srKey</code>, <code>degrees</code> - DGP participation from: <code>Voice_*</code>, <code>AI-READi_*</code>, <code>CHoRUS_*</code>, <code>CM4AI_*</code> module columns - Core participation from: <code>Admin_core-deprecate</code>, <code>Ethics_core</code>, <code>Teaming_core_depr</code>, <code>Standards_core_depr</code>, <code>Tools_core_deprecate</code>, <code>SWD_core_deprecate</code> - Institution type classified from: <code>primaryAffilName</code> using keyword matching</p>
+</div>
+<div id="limitations" class="section level3">
+<h3>Limitations</h3>
+<ol style="list-style-type: decimal">
+<li><strong>Onboarding data only</strong>: This represents when people joined, not ongoing engagement or departure</li>
+<li><strong>Self-reported</strong>: Expertise and other fields rely on participant self-reporting</li>
+<li><strong>Career stage inference</strong>: Career stages are inferred from available fields; some may be misclassified</li>
+<li><strong>Institution type classification</strong>: Automated classification based on keywords; may have errors</li>
+<li><strong>No outcome data</strong>: Cannot assess collaboration success without additional metrics</li>
+</ol>
+</div>
+</div>
+<div id="session-information" class="section level2">
+<h2>Session information</h2>
+<hr />
+<p><strong>Analysis completed:</strong> 2026-10-16 13:52:01.941222</p>
+<p><strong>Data file:</strong> B2AI_onboarding_combined_anonymized.csv</p>
+<p><strong>Notes:</strong> This analysis provides descriptive summaries and visualizations of B2AI consortium composition and structure. For evaluating team effectiveness and collaboration success, integration with additional data sources (publications, deliverables, surveys) is recommended.</p>
+<br>
+<p>
+<button type="button" class="btn btn-default btn-workflowr btn-workflowr-sessioninfo" data-toggle="collapse" data-target="#workflowr-sessioninfo" style="display: block;">
+<span class="glyphicon glyphicon-wrench" aria-hidden="true"></span> Session information
+</button>
+</p>
+<div id="workflowr-sessioninfo" class="collapse">
+<pre><code>R version 4.5.1 (2025-06-13)
+Platform: aarch64-apple-darwin20
+Running under: macOS Tahoe 26.6.2
+
+Matrix products: default
+BLAS:   /Library/Frameworks/R.framework/Versions/4.5-arm64/Resources/lib/libRblas.0.dylib 
+LAPACK: /Library/Frameworks/R.framework/Versions/4.5-arm64/Resources/lib/libRlapack.dylib;  LAPACK version 3.12.1
+
+locale:
+[1] C.UTF-8/C.UTF-8/C.UTF-8/C/C.UTF-8/C.UTF-8
+
+time zone: America/Denver
+tzcode source: internal
+
+attached base packages:
+[1] stats     graphics  grDevices utils     datasets  methods   base     
+
+other attached packages:
+ [1] kableExtra_1.4.0  knitr_1.51        viridis_0.6.5     viridisLite_0.4.3
+ [5] ggridges_0.5.7    patchwork_1.3.1   scales_1.4.0      here_1.0.2       
+ [9] lubridate_1.9.5   forcats_1.0.0     stringr_1.6.0     dplyr_1.2.1      
+[13] purrr_1.2.1       readr_2.2.0       tidyr_1.3.2       tibble_3.3.1     
+[17] ggplot2_4.0.2     tidyverse_2.0.0  
+
+loaded via a namespace (and not attached):
+ [1] gtable_0.3.6       xfun_0.57          bslib_0.10.0       tzdb_0.5.0        
+ [5] vctrs_0.7.2        tools_4.5.1        generics_0.1.4     parallel_4.5.1    
+ [9] pkgconfig_2.0.3    RColorBrewer_1.1-3 S7_0.2.1           lifecycle_1.0.5   
+[13] compiler_4.5.1     farver_2.1.2       git2r_0.36.2       textshaping_1.0.1 
+[17] httpuv_1.6.17      maps_3.4.3         htmltools_0.5.9    sass_0.4.10       
+[21] yaml_2.3.12        later_1.4.8        pillar_1.11.1      crayon_1.5.3      
+[25] jquerylib_0.1.4    whisker_0.4.1      cachem_1.1.0       tidyselect_1.2.1  
+[29] digest_0.6.39      stringi_1.8.7      labeling_0.4.3     rprojroot_2.1.1   
+[33] fastmap_1.2.0      grid_4.5.1         cli_3.6.5          magrittr_2.0.5    
+[37] withr_3.0.2        promises_1.5.0     bit64_4.6.0-1      timechange_0.4.0  
+[41] rmarkdown_2.31     bit_4.6.0          otel_0.2.0         gridExtra_2.3     
+[45] workflowr_1.7.2    hms_1.1.4          evaluate_1.0.5     rlang_1.2.0       
+[49] Rcpp_1.1.1         glue_1.8.0         xml2_1.5.2         svglite_2.2.2     
+[53] rstudioapi_0.17.1  vroom_1.7.1        jsonlite_2.0.0     R6_2.6.1          
+[57] systemfonts_1.3.2  fs_2.0.1          </code></pre>
+</div>
+</div>
+
+
+<!-- Adjust MathJax settings so that all math formulae are shown using
+TeX fonts only; see
+https://docs.mathjax.org/en/latest/web/configuration.html. This will make
+the presentation more consistent at the cost of the webpage sometimes
+taking slightly longer to load. Note that this only works because the
+footer is added to webpages before the MathJax javascript. -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    "HTML-CSS": { availableFonts: ["TeX"] }
+  });
+</script>
+
+
+
+
+</div>
+</div>
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open');
+  });
+});
+</script>
+
+<!-- code folding -->
+
+<script>
+$(document).ready(function ()  {
+
+    // temporarily add toc-ignore selector to headers for the consistency with Pandoc
+    $('.unlisted.unnumbered').addClass('toc-ignore')
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_');
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = true;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>
